@@ -3,3 +3,5 @@ conditions. The monitoring system provides accurate real-time measurements of te
 wind speed and date and time. It also allows human and computer interaction via a simple 5 button keypad, LCD, 
 buzzer-alarm and UART communication. These measurements and interactions, are made possible by intricate circuitry 
 and C-code
+
+Project Report > E-design-report > Environmental-monitoring-system.pdf
