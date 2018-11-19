@@ -1,0 +1,2198 @@
+   1                             	r8	=	0xffef0
+   2                             	r16	=	0xffee8
+   3                             	r24	=	0xffee0
+   4                             	r9	=	0xffef1
+   5                             	r17	=	0xffee9
+   6                             	r25	=	0xffee1
+   7                             	r10	=	0xffef2
+   8                             	r18	=	0xffeea
+   9                             	r26	=	0xffee2
+  10                             	r11	=	0xffef3
+  11                             	r19	=	0xffeeb
+  12                             	r27	=	0xffee3
+  13                             	r12	=	0xffef4
+  14                             	r20	=	0xffeec
+  15                             	r28	=	0xffee4
+  16                             	r13	=	0xffef5
+  17                             	r21	=	0xffeed
+  18                             	r29	=	0xffee5
+  19                             	r14	=	0xffef6
+  20                             	r22	=	0xffeee
+  21                             	r30	=	0xffee6
+  22                             	r15	=	0xffef7
+  23                             	r23	=	0xffeef
+  24                             	r31	=	0xffee7
+  25                             	.text
+  26                             	.Ltext0:
+  27                             		.comm	_a,2,2
+  28                             		.comm	_uart1TxBuf,40,1
+  29                             		.comm	_test,1,1
+  30                             		.comm	_dataBuf,41,1
+  31                             		.comm	_IIC_Buf,10,1
+  32                             		.global	_Welcome
+  33                             	.data
+  36                             	_Welcome:
+  37 0000 57 65 6C 63 6F 6D 65 20 		.string	"Welcome / Welkom"
+  37      2F 20 57 65 6C 6B 6F 6D 
+  37      00 
+  38                             		.global	_tempArr
+  41                             	_tempArr:
+  42 0011 54 65 6D 70 65 72 61 74 		.string	"Temperature"
+  42      75 72 65 00 
+  43                             		.global	_humArr
+  46                             	_humArr:
+  47 001d 48 75 6D 69 64 69 74 79 		.string	"Humidity"
+  47      00 
+  48                             		.global	_PresArr
+  51                             	_PresArr:
+  52 0026 50 72 65 73 73 75 72 65 		.string	"Pressure"
+  52      00 
+  53                             		.global	_WindArr
+  56                             	_WindArr:
+  57 002f 57 69 6E 64 20 53 70 65 		.string	"Wind Speed"
+  57      65 64 00 
+  58                             		.global	_clockSet
+  61                             	_clockSet:
+  62 003a 53 65 74 20 43 6C 6F 63 		.string	"Set Clock"
+  62      6B 00 
+  63                             		.global	_clockGet
+  66                             	_clockGet:
+  67 0044 47 65 74 20 43 6C 6F 63 		.string	"Get Clock"
+  67      6B 00 
+  68                             		.comm	_uart1RxFlag,2,2
+  69                             		.comm	_IIC_Flag,2,2
+  70                             		.comm	_uart1TxFlag,2,2
+  71                             		.comm	_uart1Status,2,2
+  72                             		.comm	_rtcStatus,2,2
+  73                             		.comm	_transmit,2,2
+  74                             		.comm	_rx_count,2,2
+  75                             		.comm	_tx_count,2,2
+  76                             		.comm	_data_count,2,2
+  77                             		.comm	_last_received,2,2
+  78                             		.comm	_buzzerON,2,2
+  79                             		.global	_welcomeFlag
+  80                             		.balign 2
+  83                             	_welcomeFlag:
+  84 004e 00 00                   		.zero	2
+  85                             		.comm	_uart1RxErrFlag,1,1
+  86                             		.comm	_temp,1,1
+  87                             		.global	_timer
+  90                             	_timer:
+  91 0050 00                      		.zero	1
+  92                             		.comm	_convTempHum,2,2
+  93                             		.comm	_pComp,2,2
+  94                             		.comm	_presMplValue,2,2
+  95                             		.comm	_tempMplValue,2,2
+  96                             		.comm	_pressValue,2,2
+  97                             		.comm	_wind_8bit,1,1
+  98 0051 00                      	.text
+  99                             		.global	_main
+ 101                             	_main:
+ 102                             	.LFB0:
+ 103                             		.file 1 "../src/r_main.c"
+   1:../src/r_main.c **** /**************************************************************************************************
+   2:../src/r_main.c ****  * DISCLAIMER
+   3:../src/r_main.c ****  * This software is supplied by Renesas Electronics Corporation and is only
+   4:../src/r_main.c ****  * intended for use with Renesas products. No other uses are authorized. This
+   5:../src/r_main.c ****  * software is owned by Renesas Electronics Corporation and is protected under
+   6:../src/r_main.c ****  * all applicable laws, including copyright laws.
+   7:../src/r_main.c ****  * THIS SOFTWARE IS PROVIDED "AS IS" AND RENESAS MAKES NO WARRANTIES REGARDING
+   8:../src/r_main.c ****  * THIS SOFTWARE, WHETHER EXPRESS, IMPLIED OR STATUTORY, INCLUDING BUT NOT
+   9:../src/r_main.c ****  * LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE
+  10:../src/r_main.c ****  * AND NON-INFRINGEMENT.  ALL SUCH WARRANTIES ARE EXPRESSLY DISCLAIMED.
+  11:../src/r_main.c ****  * TO THE MAXIMUM EXTENT PERMITTED NOT PROHIBITED BY LAW, NEITHER RENESAS
+  12:../src/r_main.c ****  * ELECTRONICS CORPORATION NOR ANY OF ITS AFFILIATED COMPANIES SHALL BE LIABLE
+  13:../src/r_main.c ****  * FOR ANY DIRECT, INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES FOR
+  14:../src/r_main.c ****  * ANY REASON RELATED TO THIS SOFTWARE, EVEN IF RENESAS OR ITS AFFILIATES HAVE
+  15:../src/r_main.c ****  * BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+  16:../src/r_main.c ****  * Renesas reserves the right, without notice, to make changes to this software
+  17:../src/r_main.c ****  * and to discontinue the availability of this software.  By using this software,
+  18:../src/r_main.c ****  * you agree to the additional terms and conditions found by accessing the
+  19:../src/r_main.c ****  * following link:
+  20:../src/r_main.c ****  * http://www.renesas.com/disclaimer
+  21:../src/r_main.c ****  *
+  22:../src/r_main.c ****  * Copyright (C) 2011, 2014 Renesas Electronics Corporation. All rights reserved.
+  23:../src/r_main.c ****  **************************************************************************************************
+  24:../src/r_main.c **** 
+  25:../src/r_main.c **** /**************************************************************************************************
+  26:../src/r_main.c ****  * File Name    : r_main.c
+  27:../src/r_main.c ****  * Version      : CodeGenerator for RL78/G13 V2.02.00.02 [11 Feb 2014]
+  28:../src/r_main.c ****  * Device(s)    : R5F100LE
+  29:../src/r_main.c ****  * Tool-Chain   : GCCRL78
+  30:../src/r_main.c ****  * Description  : This file implements main function.
+  31:../src/r_main.c ****  * Creation Date: 2015/04/16
+  32:../src/r_main.c ****  **************************************************************************************************
+  33:../src/r_main.c **** 
+  34:../src/r_main.c **** /**************************************************************************************************
+  35:../src/r_main.c **** Includes
+  36:../src/r_main.c ****  **************************************************************************************************
+  37:../src/r_main.c **** #include "r_cg_macrodriver.h"
+  38:../src/r_main.c **** #include "r_cg_cgc.h"
+  39:../src/r_main.c **** #include "r_cg_port.h"
+  40:../src/r_main.c **** #include "r_cg_serial.h"
+  41:../src/r_main.c **** #include "r_cg_timer.h"
+  42:../src/r_main.c **** #include "r_cg_rtc.h"
+  43:../src/r_main.c **** #include "r_cg_pclbuz.h"
+  44:../src/r_main.c **** /* Start user code for include. Do not edit comment generated here */
+  45:../src/r_main.c **** #include <stdlib.h>
+  46:../src/r_main.c **** #include <stdio.h>
+  47:../src/r_main.c **** #include <string.h>
+  48:../src/r_main.c **** /* End user code. Do not edit comment generated here */
+  49:../src/r_main.c **** #include "r_cg_userdefine.h"
+  50:../src/r_main.c **** 
+  51:../src/r_main.c **** /**************************************************************************************************
+  52:../src/r_main.c **** Global variables and functions
+  53:../src/r_main.c ****  **************************************************************************************************
+  54:../src/r_main.c **** /* Start user code for global. Do not edit comment generated here */
+  55:../src/r_main.c **** 
+  56:../src/r_main.c **** int a;
+  57:../src/r_main.c **** 
+  58:../src/r_main.c **** char uart1TxBuf[40], test;
+  59:../src/r_main.c **** char dataBuf[41];
+  60:../src/r_main.c **** char IIC_Buf[10];
+  61:../src/r_main.c **** char Welcome[] = "Welcome / Welkom";
+  62:../src/r_main.c **** char tempArr[] = "Temperature";
+  63:../src/r_main.c **** char humArr[] = "Humidity";
+  64:../src/r_main.c **** char PresArr[] = "Pressure";
+  65:../src/r_main.c **** char WindArr[] = "Wind Speed";
+  66:../src/r_main.c **** char clockSet[] = "Set Clock";
+  67:../src/r_main.c **** char clockGet[] = "Get Clock";
+  68:../src/r_main.c **** 
+  69:../src/r_main.c **** 
+  70:../src/r_main.c **** int uart1RxFlag;
+  71:../src/r_main.c **** int IIC_Flag;
+  72:../src/r_main.c **** int uart1TxFlag;
+  73:../src/r_main.c **** MD_STATUS uart1Status;
+  74:../src/r_main.c **** MD_STATUS rtcStatus;
+  75:../src/r_main.c **** int transmit;
+  76:../src/r_main.c **** int rx_count;
+  77:../src/r_main.c **** int tx_count;
+  78:../src/r_main.c **** int data_count;
+  79:../src/r_main.c **** int last_received;
+  80:../src/r_main.c **** int buzzerON;
+  81:../src/r_main.c **** int welcomeFlag = 0;
+  82:../src/r_main.c **** uint8_t uart1RxErrFlag, temp, timer=0;
+  83:../src/r_main.c **** uint16_t convTempHum;
+  84:../src/r_main.c **** 
+  85:../src/r_main.c **** uint16_t pComp;
+  86:../src/r_main.c **** uint16_t presMplValue;
+  87:../src/r_main.c **** uint16_t tempMplValue;
+  88:../src/r_main.c **** uint16_t pressValue;
+  89:../src/r_main.c **** uint8_t wind_8bit;
+  90:../src/r_main.c **** /* End user code. Do not edit comment generated here */
+  91:../src/r_main.c **** void R_MAIN_UserInit(void);
+  92:../src/r_main.c **** 
+  93:../src/r_main.c **** /**************************************************************************************************
+  94:../src/r_main.c ****  * Function Name: main
+  95:../src/r_main.c ****  * Description  : This function implements main function.
+  96:../src/r_main.c ****  * Arguments    : None
+  97:../src/r_main.c ****  * Return Value : None
+  98:../src/r_main.c ****  **************************************************************************************************
+  99:../src/r_main.c **** void main(void)
+ 100:../src/r_main.c **** {
+ 104                             		.loc 1 100 0
+ 105                             		; start of function
+ 106                             		; push 2: r16
+ 107                             		; locals: 58 bytes
+ 108                             		; outgoing: 8 bytes
+ 109 0000 61 EF                   		sel	rb2
+ 110 0002 C1                      		push	ax ; r16
+ 111                             	.LCFI0:
+ 112 0003 61 CF                   		sel	rb0
+ 113 0005 20 42                   		subw	sp, #66
+ 114                             	.LCFI1:
+ 101:../src/r_main.c **** 	R_MAIN_UserInit();
+ 115                             		.loc 1 101 0
+ 116 0007 FC 00 00 00             		call	!!%code(_R_MAIN_UserInit)
+ 102:../src/r_main.c **** 	/* Start user code. Do not edit comment generated here */
+ 103:../src/r_main.c **** 	R_PORT_Create();
+ 117                             		.loc 1 103 0
+ 118 000b FC 00 00 00             		call	!!%code(_R_PORT_Create)
+ 104:../src/r_main.c **** 	PM7 = 0x00 ;
+ 119                             		.loc 1 104 0
+ 120 000f C9 F0 27 FF             		movw	r8, #-217
+ 121 0013 AD F0                   		movw	ax, r8
+ 122 0015 BD F2                   		movw	r10, ax
+ 123 0017 FA F2                   		movw	hl, r10
+ 124 0019 F1                      		clrb	a
+ 125 001a 9B                      		mov	[hl], a
+ 105:../src/r_main.c **** 	initializelcdxxx();
+ 126                             		.loc 1 105 0
+ 127 001b FC 00 00 00             		call	!!%code(_initializelcdxxx)
+ 106:../src/r_main.c **** 
+ 107:../src/r_main.c **** 	buzzerON = 1;
+ 128                             		.loc 1 107 0
+ 129 001f E6                      		onew	ax
+ 130 0020 BF 00 00                		movw	!_buzzerON, ax
+ 108:../src/r_main.c **** 	char Mode = 'N';
+ 131                             		.loc 1 108 0
+ 132 0023 C8 41 4E                		mov	[sp+65], #78
+ 109:../src/r_main.c **** 
+ 110:../src/r_main.c **** 	oldstate = 2;
+ 133                             		.loc 1 110 0
+ 134 0026 CF 00 00 02             		mov	!_oldstate, #2
+ 111:../src/r_main.c **** 	powerCheck();
+ 135                             		.loc 1 111 0
+ 136 002a FC 00 00 00             		call	!!%code(_powerCheck)
+ 112:../src/r_main.c **** 
+ 113:../src/r_main.c **** 	R_TAU0_Create();
+ 137                             		.loc 1 113 0
+ 138 002e FC 00 00 00             		call	!!%code(_R_TAU0_Create)
+ 114:../src/r_main.c **** 
+ 115:../src/r_main.c **** 	R_TAU0_Channel4_Start();
+ 139                             		.loc 1 115 0
+ 140 0032 FC 00 00 00             		call	!!%code(_R_TAU0_Channel4_Start)
+ 116:../src/r_main.c **** 	R_TAU0_Channel7_Start();
+ 141                             		.loc 1 116 0
+ 142 0036 FC 00 00 00             		call	!!%code(_R_TAU0_Channel7_Start)
+ 117:../src/r_main.c **** 
+ 118:../src/r_main.c **** 	R_PCLBUZ0_Create();
+ 143                             		.loc 1 118 0
+ 144 003a FC 00 00 00             		call	!!%code(_R_PCLBUZ0_Create)
+ 119:../src/r_main.c **** 	R_RTC_Start();
+ 145                             		.loc 1 119 0
+ 146 003e FC 00 00 00             		call	!!%code(_R_RTC_Start)
+ 120:../src/r_main.c **** 
+ 121:../src/r_main.c **** 	rtc_counter_value_t my_time = {0,0,0,0,0,0,0};
+ 147                             		.loc 1 121 0
+ 148 0042 C8 33 00                		mov	[sp+51], #0
+ 149 0045 C8 34 00                		mov	[sp+52], #0
+ 150 0048 C8 35 00                		mov	[sp+53], #0
+ 151 004b C8 36 00                		mov	[sp+54], #0
+ 152 004e C8 37 00                		mov	[sp+55], #0
+ 153 0051 C8 38 00                		mov	[sp+56], #0
+ 154 0054 C8 39 00                		mov	[sp+57], #0
+ 122:../src/r_main.c **** 	rtc_counter_value_t* my_time_point = &my_time;
+ 155                             		.loc 1 122 0
+ 156 0057 C9 F0 42 00             		movw	r8, #66
+ 157 005b AE F8                   		movw	ax, sp
+ 158 005d BD F0                   		movw	r8, ax
+ 159 005f 04 42 00                		addw	ax, #66
+ 160 0062 BD F0                   		movw	r8, ax
+ 161 0064 04 F1 FF                		addw	ax, #-15
+ 162 0067 B8 3E                   		movw	[sp+62], ax
+ 163                             	.L2:
+ 123:../src/r_main.c **** 
+ 124:../src/r_main.c **** 
+ 125:../src/r_main.c **** 
+ 126:../src/r_main.c **** 	do{
+ 127:../src/r_main.c **** 
+ 128:../src/r_main.c **** 		rtcStatus = R_RTC_Set_CounterValue(my_time); // Update the RTC
+ 164                             		.loc 1 128 0 discriminator 1
+ 165 0069 88 33                   		mov	a, [sp+51]
+ 166 006b 9D F0                   		mov	r8, a
+ 167 006d 98 00                   		mov	[sp], a
+ 168 006f 88 34                   		mov	a, [sp+52]
+ 169 0071 9D F0                   		mov	r8, a
+ 170 0073 98 01                   		mov	[sp+1], a
+ 171 0075 88 35                   		mov	a, [sp+53]
+ 172 0077 9D F0                   		mov	r8, a
+ 173 0079 98 02                   		mov	[sp+2], a
+ 174 007b 88 36                   		mov	a, [sp+54]
+ 175 007d 9D F0                   		mov	r8, a
+ 176 007f 98 03                   		mov	[sp+3], a
+ 177 0081 88 37                   		mov	a, [sp+55]
+ 178 0083 9D F0                   		mov	r8, a
+ 179 0085 98 04                   		mov	[sp+4], a
+ 180 0087 88 38                   		mov	a, [sp+56]
+ 181 0089 9D F0                   		mov	r8, a
+ 182 008b 98 05                   		mov	[sp+5], a
+ 183 008d 88 39                   		mov	a, [sp+57]
+ 184 008f 9D F0                   		mov	r8, a
+ 185 0091 98 06                   		mov	[sp+6], a
+ 186 0093 FC 00 00 00             		call	!!%code(_R_RTC_Set_CounterValue)
+ 187 0097 AD F0                   		movw	ax, r8
+ 188 0099 BF 00 00                		movw	!_rtcStatus, ax
+ 129:../src/r_main.c **** 
+ 130:../src/r_main.c **** 	} while(rtcStatus != MD_OK);
+ 189                             		.loc 1 130 0 discriminator 1
+ 190 009c BD F0                   		movw	r8, ax
+ 191 009e 44 00 00                		cmpw	ax, #0 
+ 192 00a1 61 E8                   		skz 
+ 193 00a3 EC 69 00 00             		br	!!.L2
+ 131:../src/r_main.c **** 
+ 132:../src/r_main.c **** 	R_UART1_Create();
+ 194                             		.loc 1 132 0
+ 195 00a7 FC 00 00 00             		call	!!%code(_R_UART1_Create)
+ 133:../src/r_main.c **** 	R_UART1_Start();
+ 196                             		.loc 1 133 0
+ 197 00ab FC 00 00 00             		call	!!%code(_R_UART1_Start)
+ 134:../src/r_main.c **** 
+ 135:../src/r_main.c **** 	IIC_Flag = 0;
+ 198                             		.loc 1 135 0
+ 199 00af F6                      		clrw	ax
+ 200 00b0 BF 00 00                		movw	!_IIC_Flag, ax
+ 136:../src/r_main.c **** 
+ 137:../src/r_main.c **** 	my_time.sec = Dec_to_BCD(0);
+ 201                             		.loc 1 137 0
+ 202 00b3 F6                      		clrw	ax
+ 203 00b4 B8 00                   		movw	[sp], ax
+ 204 00b6 FC 00 00 00             		call	!!%code(_Dec_to_BCD)
+ 205 00ba 8D F0                   		mov	a, r8
+ 206 00bc 98 33                   		mov	[sp+51], a
+ 138:../src/r_main.c **** 	my_time.min = Dec_to_BCD(15);
+ 207                             		.loc 1 138 0
+ 208 00be 30 0F 00                		movw	ax, #15
+ 209 00c1 B8 00                   		movw	[sp], ax
+ 210 00c3 FC 00 00 00             		call	!!%code(_Dec_to_BCD)
+ 211 00c7 8D F0                   		mov	a, r8
+ 212 00c9 98 34                   		mov	[sp+52], a
+ 139:../src/r_main.c **** 	my_time.hour = Dec_to_BCD(10);
+ 213                             		.loc 1 139 0
+ 214 00cb 30 0A 00                		movw	ax, #10
+ 215 00ce B8 00                   		movw	[sp], ax
+ 216 00d0 FC 00 00 00             		call	!!%code(_Dec_to_BCD)
+ 217 00d4 8D F0                   		mov	a, r8
+ 218 00d6 98 35                   		mov	[sp+53], a
+ 140:../src/r_main.c **** 	my_time.day = Dec_to_BCD(12);
+ 219                             		.loc 1 140 0
+ 220 00d8 30 0C 00                		movw	ax, #12
+ 221 00db B8 00                   		movw	[sp], ax
+ 222 00dd FC 00 00 00             		call	!!%code(_Dec_to_BCD)
+ 223 00e1 8D F0                   		mov	a, r8
+ 224 00e3 98 36                   		mov	[sp+54], a
+ 141:../src/r_main.c **** 	my_time.month = Dec_to_BCD(3);
+ 225                             		.loc 1 141 0
+ 226 00e5 30 03 00                		movw	ax, #3
+ 227 00e8 B8 00                   		movw	[sp], ax
+ 228 00ea FC 00 00 00             		call	!!%code(_Dec_to_BCD)
+ 229 00ee 8D F0                   		mov	a, r8
+ 230 00f0 98 38                   		mov	[sp+56], a
+ 231                             	.L3:
+ 142:../src/r_main.c **** 
+ 143:../src/r_main.c **** 
+ 144:../src/r_main.c **** 	do{
+ 145:../src/r_main.c **** 		rtcStatus = R_RTC_Set_CounterValue(my_time); // Update the RTC
+ 232                             		.loc 1 145 0 discriminator 1
+ 233 00f2 88 33                   		mov	a, [sp+51]
+ 234 00f4 9D F0                   		mov	r8, a
+ 235 00f6 98 00                   		mov	[sp], a
+ 236 00f8 88 34                   		mov	a, [sp+52]
+ 237 00fa 9D F0                   		mov	r8, a
+ 238 00fc 98 01                   		mov	[sp+1], a
+ 239 00fe 88 35                   		mov	a, [sp+53]
+ 240 0100 9D F0                   		mov	r8, a
+ 241 0102 98 02                   		mov	[sp+2], a
+ 242 0104 88 36                   		mov	a, [sp+54]
+ 243 0106 9D F0                   		mov	r8, a
+ 244 0108 98 03                   		mov	[sp+3], a
+ 245 010a 88 37                   		mov	a, [sp+55]
+ 246 010c 9D F0                   		mov	r8, a
+ 247 010e 98 04                   		mov	[sp+4], a
+ 248 0110 88 38                   		mov	a, [sp+56]
+ 249 0112 9D F0                   		mov	r8, a
+ 250 0114 98 05                   		mov	[sp+5], a
+ 251 0116 88 39                   		mov	a, [sp+57]
+ 252 0118 9D F0                   		mov	r8, a
+ 253 011a 98 06                   		mov	[sp+6], a
+ 254 011c FC 00 00 00             		call	!!%code(_R_RTC_Set_CounterValue)
+ 255 0120 AD F0                   		movw	ax, r8
+ 256 0122 BF 00 00                		movw	!_rtcStatus, ax
+ 146:../src/r_main.c **** 
+ 147:../src/r_main.c **** 	} while(rtcStatus != MD_OK);
+ 257                             		.loc 1 147 0 discriminator 1
+ 258 0125 BD F0                   		movw	r8, ax
+ 259 0127 44 00 00                		cmpw	ax, #0 
+ 260 012a 61 E8                   		skz 
+ 261 012c EC F2 00 00             		br	!!.L3
+ 148:../src/r_main.c **** 
+ 149:../src/r_main.c **** 	for(a=0;a<250;a++)
+ 262                             		.loc 1 149 0
+ 263 0130 F6                      		clrw	ax
+ 264 0131 BF 00 00                		movw	!_a, ax
+ 265 0134 EC 4F 01 00             		br	!!.L4
+ 266                             	.L5:
+ 150:../src/r_main.c **** 		IIC_Buf[a] = 0;
+ 267                             		.loc 1 150 0 discriminator 2
+ 268 0138 AF 00 00                		movw	ax, !_a
+ 269 013b BD F0                   		movw	r8, ax
+ 270 013d 04 00 00                		addw	ax, #_IIC_Buf
+ 271 0140 16                      		movw	hl, ax
+ 272 0141 F1                      		clrb	a
+ 273 0142 9B                      		mov	[hl], a
+ 149:../src/r_main.c **** 	for(a=0;a<250;a++)
+ 274                             		.loc 1 149 0 discriminator 2
+ 275 0143 AF 00 00                		movw	ax, !_a
+ 276 0146 BD F0                   		movw	r8, ax
+ 277 0148 A6 F0                   		incw	r8
+ 278 014a AD F0                   		movw	ax, r8
+ 279 014c BF 00 00                		movw	!_a, ax
+ 280                             	.L4:
+ 149:../src/r_main.c **** 	for(a=0;a<250;a++)
+ 281                             		.loc 1 149 0 is_stmt 0 discriminator 1
+ 282 014f AF 00 00                		movw	ax, !_a
+ 283 0152 BD F0                   		movw	r8, ax
+ 284 0154 44 F9 00                		cmpw	ax, #249 
+ 285 0157 71 FF                   		xor1 CY,a.7
+ 286 0159 61 E3                   		skh 
+ 287 015b EC 38 01 00             		br	!!.L5
+ 151:../src/r_main.c **** 
+ 152:../src/r_main.c **** 	clearBuff(sizeof(uart1RxBuf));
+ 288                             		.loc 1 152 0 is_stmt 1
+ 289 015f 30 29 00                		movw	ax, #41
+ 290 0162 B8 00                   		movw	[sp], ax
+ 291 0164 FC 00 00 00             		call	!!%code(_clearBuff)
+ 153:../src/r_main.c **** 	tx_count = 0;
+ 292                             		.loc 1 153 0
+ 293 0168 F6                      		clrw	ax
+ 294 0169 BF 00 00                		movw	!_tx_count, ax
+ 154:../src/r_main.c **** 	rx_count = 0;
+ 295                             		.loc 1 154 0
+ 296 016c F6                      		clrw	ax
+ 297 016d BF 00 00                		movw	!_rx_count, ax
+ 155:../src/r_main.c **** 	data_count = 0;
+ 298                             		.loc 1 155 0
+ 299 0170 F6                      		clrw	ax
+ 300 0171 BF 00 00                		movw	!_data_count, ax
+ 156:../src/r_main.c **** 	uart1Status = R_UART1_Receive(&uart1RxBuf[rx_count],1);
+ 301                             		.loc 1 156 0
+ 302 0174 AF 00 00                		movw	ax, !_rx_count
+ 303 0177 BD F0                   		movw	r8, ax
+ 304 0179 04 00 00                		addw	ax, #_uart1RxBuf
+ 305 017c BD F0                   		movw	r8, ax
+ 306 017e B8 00                   		movw	[sp], ax
+ 307 0180 E6                      		onew	ax
+ 308 0181 B8 02                   		movw	[sp+2], ax
+ 309 0183 FC 00 00 00             		call	!!%code(_R_UART1_Receive)
+ 310 0187 AD F0                   		movw	ax, r8
+ 311 0189 BF 00 00                		movw	!_uart1Status, ax
+ 157:../src/r_main.c **** 	Start(Welcome, sizeof(Welcome)-1);
+ 312                             		.loc 1 157 0
+ 313 018c 30 00 00                		movw	ax, #_Welcome
+ 314 018f B8 00                   		movw	[sp], ax
+ 315 0191 30 10 00                		movw	ax, #16
+ 316 0194 B8 02                   		movw	[sp+2], ax
+ 317 0196 FC 00 00 00             		call	!!%code(_Start)
+ 158:../src/r_main.c **** 
+ 159:../src/r_main.c **** 	//------------------------------------------------------------------------------------------------
+ 160:../src/r_main.c **** 	IIC_Buf[0] = 0x4;
+ 318                             		.loc 1 160 0
+ 319 019a CF 00 00 04             		mov	!_IIC_Buf, #4
+ 161:../src/r_main.c **** 
+ 162:../src/r_main.c **** 	while(R_IICA0_Busy_Check());
+ 320                             		.loc 1 162 0
+ 321 019e 00                      		nop
+ 322                             	.L6:
+ 323                             		.loc 1 162 0 is_stmt 0 discriminator 1
+ 324 019f FC 00 00 00             		call	!!%code(_R_IICA0_Busy_Check)
+ 325 01a3 AD F0                   		movw	ax, r8
+ 326 01a5 44 00 00                		cmpw	ax, #0 
+ 327 01a8 61 E8                   		skz 
+ 328 01aa EC 9F 01 00             		br	!!.L6
+ 163:../src/r_main.c **** 
+ 164:../src/r_main.c **** 	R_IICA0_Master_Send(0xC0, IIC_Buf, 1, 0);
+ 329                             		.loc 1 164 0 is_stmt 1
+ 330 01ae C8 00 C0                		mov	[sp], #-64
+ 331 01b1 30 00 00                		movw	ax, #_IIC_Buf
+ 332 01b4 B8 02                   		movw	[sp+2], ax
+ 333 01b6 E6                      		onew	ax
+ 334 01b7 B8 04                   		movw	[sp+4], ax
+ 335 01b9 C8 06 00                		mov	[sp+6], #0
+ 336 01bc FC 00 00 00             		call	!!%code(_R_IICA0_Master_Send)
+ 165:../src/r_main.c **** 
+ 166:../src/r_main.c **** 	while(IIC_Flag == 0)
+ 337                             		.loc 1 166 0
+ 338 01c0 EC C5 01 00             		br	!!.L7
+ 339                             	.L8:
+ 167:../src/r_main.c **** 		NOP();
+ 340                             		.loc 1 167 0
+ 341                             	 ; 167 "../src/r_main.c" 1
+ 342 01c4 00                      		nop
+ 343                             	 ; 0 "" 2
+ 344                             	.L7:
+ 166:../src/r_main.c **** 	while(IIC_Flag == 0)
+ 345                             		.loc 1 166 0 discriminator 1
+ 346 01c5 AF 00 00                		movw	ax, !_IIC_Flag
+ 347 01c8 BD F0                   		movw	r8, ax
+ 348 01ca 44 00 00                		cmpw	ax, #0 
+ 349 01cd 61 F8                   		sknz 
+ 350 01cf EC C4 01 00             		br	!!.L8
+ 168:../src/r_main.c **** 	IIC_Flag = 0;
+ 351                             		.loc 1 168 0
+ 352 01d3 F6                      		clrw	ax
+ 353 01d4 BF 00 00                		movw	!_IIC_Flag, ax
+ 169:../src/r_main.c **** 
+ 170:../src/r_main.c **** 	delayNoInt(300);
+ 354                             		.loc 1 170 0
+ 355 01d7 30 2C 01                		movw	ax, #300
+ 356 01da B8 00                   		movw	[sp], ax
+ 357 01dc FC 00 00 00             		call	!!%code(_delayNoInt)
+ 171:../src/r_main.c **** 
+ 172:../src/r_main.c **** 
+ 173:../src/r_main.c **** 	delayNoInt(50000);
+ 358                             		.loc 1 173 0
+ 359 01e0 30 50 C3                		movw	ax, #-15536
+ 360 01e3 B8 00                   		movw	[sp], ax
+ 361 01e5 F6                      		clrw	ax
+ 362 01e6 B8 02                   		movw	[sp+2], ax
+ 363 01e8 FC 00 00 00             		call	!!%code(_delayNoInt)
+ 174:../src/r_main.c **** 	delayNoInt(39000);
+ 364                             		.loc 1 174 0
+ 365 01ec 30 58 98                		movw	ax, #-26536
+ 366 01ef B8 00                   		movw	[sp], ax
+ 367 01f1 F6                      		clrw	ax
+ 368 01f2 B8 02                   		movw	[sp+2], ax
+ 369 01f4 FC 00 00 00             		call	!!%code(_delayNoInt)
+ 175:../src/r_main.c **** 
+ 176:../src/r_main.c **** 
+ 177:../src/r_main.c **** 
+ 178:../src/r_main.c **** 
+ 179:../src/r_main.c **** 	R_IICA0_Master_Receive(0xC1, IIC_Buf, 8, 0);
+ 370                             		.loc 1 179 0
+ 371 01f8 C8 00 C1                		mov	[sp], #-63
+ 372 01fb 30 00 00                		movw	ax, #_IIC_Buf
+ 373 01fe B8 02                   		movw	[sp+2], ax
+ 374 0200 30 08 00                		movw	ax, #8
+ 375 0203 B8 04                   		movw	[sp+4], ax
+ 376 0205 C8 06 00                		mov	[sp+6], #0
+ 377 0208 FC 00 00 00             		call	!!%code(_R_IICA0_Master_Receive)
+ 180:../src/r_main.c **** 
+ 181:../src/r_main.c **** 	while(IIC_Flag == 0)
+ 378                             		.loc 1 181 0
+ 379 020c EC 11 02 00             		br	!!.L9
+ 380                             	.L10:
+ 182:../src/r_main.c **** 		NOP();
+ 381                             		.loc 1 182 0
+ 382                             	 ; 182 "../src/r_main.c" 1
+ 383 0210 00                      		nop
+ 384                             	 ; 0 "" 2
+ 385                             	.L9:
+ 181:../src/r_main.c **** 	while(IIC_Flag == 0)
+ 386                             		.loc 1 181 0 discriminator 1
+ 387 0211 AF 00 00                		movw	ax, !_IIC_Flag
+ 388 0214 BD F0                   		movw	r8, ax
+ 389 0216 44 00 00                		cmpw	ax, #0 
+ 390 0219 61 F8                   		sknz 
+ 391 021b EC 10 02 00             		br	!!.L10
+ 183:../src/r_main.c **** 	IIC_Flag = 0;
+ 392                             		.loc 1 183 0
+ 393 021f F6                      		clrw	ax
+ 394 0220 BF 00 00                		movw	!_IIC_Flag, ax
+ 184:../src/r_main.c **** 
+ 185:../src/r_main.c **** 	delayNoInt(1000);
+ 395                             		.loc 1 185 0
+ 396 0223 30 E8 03                		movw	ax, #1000
+ 397 0226 B8 00                   		movw	[sp], ax
+ 398 0228 FC 00 00 00             		call	!!%code(_delayNoInt)
+ 186:../src/r_main.c **** 
+ 187:../src/r_main.c **** 	calCoef(IIC_Buf);
+ 399                             		.loc 1 187 0
+ 400 022c 30 00 00                		movw	ax, #_IIC_Buf
+ 401 022f B8 00                   		movw	[sp], ax
+ 402 0231 FC 00 00 00             		call	!!%code(_calCoef)
+ 188:../src/r_main.c **** 
+ 189:../src/r_main.c **** 	R_TAU0_Channel3_Start();
+ 403                             		.loc 1 189 0
+ 404 0235 FC 00 00 00             		call	!!%code(_R_TAU0_Channel3_Start)
+ 190:../src/r_main.c **** 	cycleFlag = 1;
+ 405                             		.loc 1 190 0
+ 406 0239 E6                      		onew	ax
+ 407 023a BF 00 00                		movw	!_cycleFlag, ax
+ 408                             	.L63:
+ 191:../src/r_main.c **** 	//------------------------------------------------------------------------------------------------
+ 192:../src/r_main.c **** 
+ 193:../src/r_main.c **** 	while (1U)
+ 194:../src/r_main.c **** 	{
+ 195:../src/r_main.c **** 		if((welcomeFlag==0)&&(cycleTimer==2))
+ 409                             		.loc 1 195 0
+ 410 023d AF 00 00                		movw	ax, !_welcomeFlag
+ 411 0240 BD F0                   		movw	r8, ax
+ 412 0242 44 00 00                		cmpw	ax, #0 
+ 413 0245 61 E8                   		skz 
+ 414 0247 EC 61 02 00             		br	!!.L11
+ 415                             		.loc 1 195 0 is_stmt 0 discriminator 1
+ 416 024b AF 00 00                		movw	ax, !_cycleTimer
+ 417 024e BD F0                   		movw	r8, ax
+ 418 0250 44 02 00                		cmpw	ax, #2 
+ 419 0253 61 E8                   		skz 
+ 420 0255 EC 61 02 00             		br	!!.L11
+ 196:../src/r_main.c **** 		{
+ 197:../src/r_main.c **** 			cycleTimer = 0;
+ 421                             		.loc 1 197 0 is_stmt 1
+ 422 0259 F6                      		clrw	ax
+ 423 025a BF 00 00                		movw	!_cycleTimer, ax
+ 198:../src/r_main.c **** 			welcomeFlag = 1;
+ 424                             		.loc 1 198 0
+ 425 025d E6                      		onew	ax
+ 426 025e BF 00 00                		movw	!_welcomeFlag, ax
+ 427                             	.L11:
+ 199:../src/r_main.c **** 		}
+ 200:../src/r_main.c **** 
+ 201:../src/r_main.c **** 		if(sec_flag)
+ 428                             		.loc 1 201 0
+ 429 0261 AF 00 00                		movw	ax, !_sec_flag
+ 430 0264 BD F0                   		movw	r8, ax
+ 431 0266 44 00 00                		cmpw	ax, #0 
+ 432 0269 61 F8                   		sknz 
+ 433 026b EC 73 02 00             		br	!!.L12
+ 202:../src/r_main.c **** 		{
+ 203:../src/r_main.c **** 			calWind();
+ 434                             		.loc 1 203 0
+ 435 026f FC 00 00 00             		call	!!%code(_calWind)
+ 436                             	.L12:
+ 204:../src/r_main.c **** 		}
+ 205:../src/r_main.c **** 		if(buzFlag&&buzTimeFlag)
+ 437                             		.loc 1 205 0
+ 438 0273 AF 00 00                		movw	ax, !_buzFlag
+ 439 0276 BD F0                   		movw	r8, ax
+ 440 0278 44 00 00                		cmpw	ax, #0 
+ 441 027b 61 F8                   		sknz 
+ 442 027d EC 97 02 00             		br	!!.L13
+ 443                             		.loc 1 205 0 is_stmt 0 discriminator 1
+ 444 0281 AF 00 00                		movw	ax, !_buzTimeFlag
+ 445 0284 BD F0                   		movw	r8, ax
+ 446 0286 44 00 00                		cmpw	ax, #0 
+ 447 0289 61 F8                   		sknz 
+ 448 028b EC 97 02 00             		br	!!.L13
+ 206:../src/r_main.c **** 		{
+ 207:../src/r_main.c **** 
+ 208:../src/r_main.c **** 			buzTimeFlag = 0;
+ 449                             		.loc 1 208 0 is_stmt 1
+ 450 028f F6                      		clrw	ax
+ 451 0290 BF 00 00                		movw	!_buzTimeFlag, ax
+ 209:../src/r_main.c **** 			BUZZ_LOOP();
+ 452                             		.loc 1 209 0
+ 453 0293 FC 00 00 00             		call	!!%code(_BUZZ_LOOP)
+ 454                             	.L13:
+ 210:../src/r_main.c **** 		}
+ 211:../src/r_main.c **** 
+ 212:../src/r_main.c **** 		if (uart1RxFlag)
+ 455                             		.loc 1 212 0
+ 456 0297 AF 00 00                		movw	ax, !_uart1RxFlag
+ 457 029a BD F0                   		movw	r8, ax
+ 458 029c 44 00 00                		cmpw	ax, #0 
+ 459 029f 61 F8                   		sknz 
+ 460 02a1 EC 8F 0B 00             		br	!!.L14
+ 213:../src/r_main.c **** 		{
+ 214:../src/r_main.c **** 
+ 215:../src/r_main.c **** 
+ 216:../src/r_main.c **** 
+ 217:../src/r_main.c **** 
+ 218:../src/r_main.c **** 			uart1RxFlag = 0;
+ 461                             		.loc 1 218 0
+ 462 02a5 F6                      		clrw	ax
+ 463 02a6 BF 00 00                		movw	!_uart1RxFlag, ax
+ 219:../src/r_main.c **** 			last_received = (int)uart1RxBuf[rx_count];
+ 464                             		.loc 1 219 0
+ 465 02a9 AF 00 00                		movw	ax, !_rx_count
+ 466 02ac BD F0                   		movw	r8, ax
+ 467 02ae 04 00 00                		addw	ax, #_uart1RxBuf
+ 468 02b1 16                      		movw	hl, ax
+ 469 02b2 8B                      		mov	a, [hl]
+ 470 02b3 9D F0                   		mov	r8, a
+ 471 02b5 CD F1 00                		mov	r9, #0
+ 472 02b8 AD F0                   		movw	ax, r8
+ 473 02ba BF 00 00                		movw	!_last_received, ax
+ 220:../src/r_main.c **** 
+ 221:../src/r_main.c **** 
+ 222:../src/r_main.c **** 
+ 223:../src/r_main.c **** 
+ 224:../src/r_main.c **** 			if(((last_received>=0x00)&&(last_received<=0x7F))||((last_received>=0x82)&&(last_received<=0xEF)
+ 474                             		.loc 1 224 0
+ 475 02bd BD F0                   		movw	r8, ax
+ 476 02bf 44 00 00                		cmpw	ax, #0 
+ 477 02c2 71 FF                   		xor1 CY,a.7
+ 478 02c4 61 D8                   		sknc 
+ 479 02c6 EC DA 02 00             		br	!!.L15
+ 480                             		.loc 1 224 0 is_stmt 0 discriminator 1
+ 481 02ca AF 00 00                		movw	ax, !_last_received
+ 482 02cd BD F0                   		movw	r8, ax
+ 483 02cf 44 7F 00                		cmpw	ax, #127 
+ 484 02d2 71 FF                   		xor1 CY,a.7
+ 485 02d4 61 E3                   		skh 
+ 486 02d6 EC FA 02 00             		br	!!.L16
+ 487                             	.L15:
+ 488                             		.loc 1 224 0 discriminator 2
+ 489 02da AF 00 00                		movw	ax, !_last_received
+ 490 02dd BD F0                   		movw	r8, ax
+ 491 02df 44 81 00                		cmpw	ax, #129 
+ 492 02e2 71 FF                   		xor1 CY,a.7
+ 493 02e4 61 E3                   		skh 
+ 494 02e6 EC 00 03 00             		br	!!.L17
+ 495                             		.loc 1 224 0 discriminator 1
+ 496 02ea AF 00 00                		movw	ax, !_last_received
+ 497 02ed BD F0                   		movw	r8, ax
+ 498 02ef 44 EF 00                		cmpw	ax, #239 
+ 499 02f2 71 FF                   		xor1 CY,a.7
+ 500 02f4 61 F3                   		sknh 
+ 501 02f6 EC 00 03 00             		br	!!.L17
+ 502                             	.L16:
+ 225:../src/r_main.c **** 			{
+ 226:../src/r_main.c **** 				last_received=0x7F;
+ 503                             		.loc 1 226 0 is_stmt 1
+ 504 02fa 30 7F 00                		movw	ax, #127
+ 505 02fd BF 00 00                		movw	!_last_received, ax
+ 506                             	.L17:
+ 227:../src/r_main.c **** 			}
+ 228:../src/r_main.c **** 
+ 229:../src/r_main.c **** 			if(Mode == 'N')
+ 507                             		.loc 1 229 0
+ 508 0300 88 41                   		mov	a, [sp+65]
+ 509 0302 4C 4E                   		cmp	a, #78 
+ 510 0304 61 E8                   		skz 
+ 511 0306 EC 76 04 00             		br	!!.L18
+ 512                             	.LBB2:
+ 230:../src/r_main.c **** 			{
+ 231:../src/r_main.c **** 
+ 232:../src/r_main.c **** 				if(welcomeFlag==1)
+ 513                             		.loc 1 232 0
+ 514 030a AF 00 00                		movw	ax, !_welcomeFlag
+ 515 030d BD F0                   		movw	r8, ax
+ 516 030f 44 01 00                		cmpw	ax, #1 
+ 517 0312 61 E8                   		skz 
+ 518 0314 EC 82 03 00             		br	!!.L19
+ 233:../src/r_main.c **** 				{
+ 234:../src/r_main.c **** 					if((cycleTimer<9)&&(cycleTimer>0)&&((cycleTimer%2)==0))
+ 519                             		.loc 1 234 0
+ 520 0318 AF 00 00                		movw	ax, !_cycleTimer
+ 521 031b BD F0                   		movw	r8, ax
+ 522 031d 44 08 00                		cmpw	ax, #8 
+ 523 0320 71 FF                   		xor1 CY,a.7
+ 524 0322 61 F3                   		sknh 
+ 525 0324 EC 6A 03 00             		br	!!.L20
+ 526                             		.loc 1 234 0 is_stmt 0 discriminator 1
+ 527 0328 AF 00 00                		movw	ax, !_cycleTimer
+ 528 032b BD F0                   		movw	r8, ax
+ 529 032d 44 00 00                		cmpw	ax, #0 
+ 530 0330 71 FF                   		xor1 CY,a.7
+ 531 0332 61 E3                   		skh 
+ 532 0334 EC 6A 03 00             		br	!!.L20
+ 533 0338 AF 00 00                		movw	ax, !_cycleTimer
+ 534 033b BD F2                   		movw	r10, ax
+ 535 033d B8 1A                   		movw	[sp+26], ax
+ 536 033f BD F0                   		movw	r8, ax
+ 537 0341 B8 18                   		movw	[sp+24], ax
+ 538 0343 88 18                   		mov	a, [sp+24]
+ 539 0345 5C 01                   		and	a, #1
+ 540 0347 9D E8                   		mov	r16, a
+ 541 0349 88 19                   		mov	a, [sp+25]
+ 542 034b 5C 00                   		and	a, #0
+ 543 034d 9D E9                   		mov	r17, a
+ 544 034f AD E8                   		movw	ax, r16
+ 545 0351 44 00 00                		cmpw	ax, #0 
+ 546 0354 61 E8                   		skz 
+ 547 0356 EC 6A 03 00             		br	!!.L20
+ 235:../src/r_main.c **** 					{
+ 236:../src/r_main.c **** 						cycleMode++;
+ 548                             		.loc 1 236 0 is_stmt 1
+ 549 035a AF 00 00                		movw	ax, !_cycleMode
+ 550 035d BD F0                   		movw	r8, ax
+ 551 035f A6 F0                   		incw	r8
+ 552 0361 AD F0                   		movw	ax, r8
+ 553 0363 BF 00 00                		movw	!_cycleMode, ax
+ 554 0366 EC 82 03 00             		br	!!.L19
+ 555                             	.L20:
+ 237:../src/r_main.c **** 					}
+ 238:../src/r_main.c **** 					else if(cycleTimer>60)
+ 556                             		.loc 1 238 0
+ 557 036a AF 00 00                		movw	ax, !_cycleTimer
+ 558 036d BD F0                   		movw	r8, ax
+ 559 036f 44 3C 00                		cmpw	ax, #60 
+ 560 0372 71 FF                   		xor1 CY,a.7
+ 561 0374 61 E3                   		skh 
+ 562 0376 EC 82 03 00             		br	!!.L19
+ 239:../src/r_main.c **** 					{
+ 240:../src/r_main.c **** 						cycleTimer = 0;
+ 563                             		.loc 1 240 0
+ 564 037a F6                      		clrw	ax
+ 565 037b BF 00 00                		movw	!_cycleTimer, ax
+ 241:../src/r_main.c **** 						cycleMode = 0;
+ 566                             		.loc 1 241 0
+ 567 037e F6                      		clrw	ax
+ 568 037f BF 00 00                		movw	!_cycleMode, ax
+ 569                             	.L19:
+ 242:../src/r_main.c **** 					}
+ 243:../src/r_main.c **** 				}
+ 244:../src/r_main.c **** 				cycle();
+ 570                             		.loc 1 244 0
+ 571 0382 FC 00 00 00             		call	!!%code(_cycle)
+ 245:../src/r_main.c **** 
+ 246:../src/r_main.c **** 
+ 247:../src/r_main.c **** 
+ 248:../src/r_main.c **** 				switch(last_received)
+ 572                             		.loc 1 248 0
+ 573 0386 AF 00 00                		movw	ax, !_last_received
+ 574 0389 BD F0                   		movw	r8, ax
+ 575 038b 44 7F 00                		cmpw	ax, #127 
+ 576 038e 61 F8                   		sknz 
+ 577 0390 EC A3 03 00             		br	!!.L21
+ 578 0394 AD F0                   		movw	ax, r8
+ 579 0396 44 81 00                		cmpw	ax, #129 
+ 580 0399 61 F8                   		sknz 
+ 581 039b EC FD 03 00             		br	!!.L22
+ 582 039f EC 76 04 00             		br	!!.L18
+ 583                             	.L21:
+ 584                             	.LBB3:
+ 249:../src/r_main.c **** 				{
+ 250:../src/r_main.c **** 
+ 251:../src/r_main.c **** 
+ 252:../src/r_main.c **** 				case 0x7F :
+ 253:../src/r_main.c **** 
+ 254:../src/r_main.c **** 					dataBuf[data_count] = uart1RxBuf[rx_count];
+ 585                             		.loc 1 254 0
+ 586 03a3 AF 00 00                		movw	ax, !_data_count
+ 587 03a6 BD F0                   		movw	r8, ax
+ 588 03a8 AF 00 00                		movw	ax, !_rx_count
+ 589 03ab BD F2                   		movw	r10, ax
+ 590 03ad 04 00 00                		addw	ax, #_uart1RxBuf
+ 591 03b0 16                      		movw	hl, ax
+ 592 03b1 8B                      		mov	a, [hl]
+ 593 03b2 9D F2                   		mov	r10, a
+ 594 03b4 AD F0                   		movw	ax, r8
+ 595 03b6 04 00 00                		addw	ax, #_dataBuf
+ 596 03b9 16                      		movw	hl, ax
+ 597 03ba 8D F2                   		mov	a, r10
+ 598 03bc 9B                      		mov	[hl], a
+ 255:../src/r_main.c **** 					if(data_count<40)
+ 599                             		.loc 1 255 0
+ 600 03bd AF 00 00                		movw	ax, !_data_count
+ 601 03c0 BD F0                   		movw	r8, ax
+ 602 03c2 44 27 00                		cmpw	ax, #39 
+ 603 03c5 71 FF                   		xor1 CY,a.7
+ 604 03c7 61 F3                   		sknh 
+ 605 03c9 EC D9 03 00             		br	!!.L23
+ 256:../src/r_main.c **** 						data_count++;
+ 606                             		.loc 1 256 0
+ 607 03cd AF 00 00                		movw	ax, !_data_count
+ 608 03d0 BD F0                   		movw	r8, ax
+ 609 03d2 A6 F0                   		incw	r8
+ 610 03d4 AD F0                   		movw	ax, r8
+ 611 03d6 BF 00 00                		movw	!_data_count, ax
+ 612                             	.L23:
+ 257:../src/r_main.c **** 					if(rx_count<40)
+ 613                             		.loc 1 257 0
+ 614 03d9 AF 00 00                		movw	ax, !_rx_count
+ 615 03dc BD F0                   		movw	r8, ax
+ 616 03de 44 27 00                		cmpw	ax, #39 
+ 617 03e1 71 FF                   		xor1 CY,a.7
+ 618 03e3 61 F3                   		sknh 
+ 619 03e5 EC F9 03 00             		br	!!.L24
+ 258:../src/r_main.c **** 						rx_count++;
+ 620                             		.loc 1 258 0
+ 621 03e9 AF 00 00                		movw	ax, !_rx_count
+ 622 03ec BD F0                   		movw	r8, ax
+ 623 03ee A6 F0                   		incw	r8
+ 624 03f0 AD F0                   		movw	ax, r8
+ 625 03f2 BF 00 00                		movw	!_rx_count, ax
+ 259:../src/r_main.c **** 
+ 260:../src/r_main.c **** 					break;
+ 626                             		.loc 1 260 0
+ 627 03f5 EC 76 04 00             		br	!!.L18
+ 628                             	.L24:
+ 629 03f9 EC 76 04 00             		br	!!.L18
+ 630                             	.L22:
+ 261:../src/r_main.c **** 
+ 262:../src/r_main.c **** 				case 0x81 :
+ 263:../src/r_main.c **** 					//Test&Monitor
+ 264:../src/r_main.c **** 					R_TAU0_Channel3_Stop();
+ 631                             		.loc 1 264 0
+ 632 03fd FC 00 00 00             		call	!!%code(_R_TAU0_Channel3_Stop)
+ 265:../src/r_main.c **** 					cycleFlag = 0;
+ 633                             		.loc 1 265 0
+ 634 0401 F6                      		clrw	ax
+ 635 0402 BF 00 00                		movw	!_cycleFlag, ax
+ 266:../src/r_main.c **** 					if(buzzerON)
+ 636                             		.loc 1 266 0
+ 637 0405 AF 00 00                		movw	ax, !_buzzerON
+ 638 0408 BD F0                   		movw	r8, ax
+ 639 040a 44 00 00                		cmpw	ax, #0 
+ 640 040d 61 F8                   		sknz 
+ 641 040f EC 17 04 00             		br	!!.L26
+ 267:../src/r_main.c **** 						BUZZ_SHORT();
+ 642                             		.loc 1 267 0
+ 643 0413 FC 00 00 00             		call	!!%code(_BUZZ_SHORT)
+ 644                             	.L26:
+ 268:../src/r_main.c **** 					uart1Status = R_UART1_Send(&uart1RxBuf[rx_count], 1);
+ 645                             		.loc 1 268 0
+ 646 0417 AF 00 00                		movw	ax, !_rx_count
+ 647 041a BD F0                   		movw	r8, ax
+ 648 041c 04 00 00                		addw	ax, #_uart1RxBuf
+ 649 041f BD F0                   		movw	r8, ax
+ 650 0421 B8 00                   		movw	[sp], ax
+ 651 0423 E6                      		onew	ax
+ 652 0424 B8 02                   		movw	[sp+2], ax
+ 653 0426 FC 00 00 00             		call	!!%code(_R_UART1_Send)
+ 654 042a AD F0                   		movw	ax, r8
+ 655 042c BF 00 00                		movw	!_uart1Status, ax
+ 269:../src/r_main.c **** 					Mode = 'T';
+ 656                             		.loc 1 269 0
+ 657 042f C8 41 54                		mov	[sp+65], #84
+ 270:../src/r_main.c **** 					char word[] = {"Test Mode"};
+ 658                             		.loc 1 270 0
+ 659 0432 C8 29 54                		mov	[sp+41], #84
+ 660 0435 C8 2A 65                		mov	[sp+42], #101
+ 661 0438 C8 2B 73                		mov	[sp+43], #115
+ 662 043b C8 2C 74                		mov	[sp+44], #116
+ 663 043e C8 2D 20                		mov	[sp+45], #32
+ 664 0441 C8 2E 4D                		mov	[sp+46], #77
+ 665 0444 C8 2F 6F                		mov	[sp+47], #111
+ 666 0447 C8 30 64                		mov	[sp+48], #100
+ 667 044a C8 31 65                		mov	[sp+49], #101
+ 668 044d C8 32 00                		mov	[sp+50], #0
+ 271:../src/r_main.c **** 					int length = sizeof(word) -1;
+ 669                             		.loc 1 271 0
+ 670 0450 30 09 00                		movw	ax, #9
+ 671 0453 B8 3C                   		movw	[sp+60], ax
+ 272:../src/r_main.c **** 					powerCheck();
+ 672                             		.loc 1 272 0
+ 673 0455 FC 00 00 00             		call	!!%code(_powerCheck)
+ 273:../src/r_main.c **** 					Start(word, length);
+ 674                             		.loc 1 273 0
+ 675 0459 C9 F2 42 00             		movw	r10, #66
+ 676 045d AE F8                   		movw	ax, sp
+ 677 045f BD F2                   		movw	r10, ax
+ 678 0461 04 42 00                		addw	ax, #66
+ 679 0464 BD F2                   		movw	r10, ax
+ 680 0466 04 E7 FF                		addw	ax, #-25
+ 681 0469 B8 00                   		movw	[sp], ax
+ 682 046b A8 3C                   		movw	ax, [sp+60]
+ 683 046d BD F0                   		movw	r8, ax
+ 684 046f B8 02                   		movw	[sp+2], ax
+ 685 0471 FC 00 00 00             		call	!!%code(_Start)
+ 274:../src/r_main.c **** 
+ 275:../src/r_main.c **** 
+ 276:../src/r_main.c **** 					break;
+ 686                             		.loc 1 276 0
+ 687 0475 00                      		nop
+ 688                             	.L18:
+ 689                             	.LBE3:
+ 690                             	.LBE2:
+ 277:../src/r_main.c **** 
+ 278:../src/r_main.c **** 
+ 279:../src/r_main.c **** 				}
+ 280:../src/r_main.c **** 
+ 281:../src/r_main.c **** 			}
+ 282:../src/r_main.c **** 
+ 283:../src/r_main.c **** 			if(Mode == 'T')
+ 691                             		.loc 1 283 0
+ 692 0476 88 41                   		mov	a, [sp+65]
+ 693 0478 4C 54                   		cmp	a, #84 
+ 694 047a 61 E8                   		skz 
+ 695 047c EC 77 0B 00             		br	!!.L27
+ 284:../src/r_main.c **** 			{
+ 285:../src/r_main.c **** 
+ 286:../src/r_main.c **** 
+ 287:../src/r_main.c **** 
+ 288:../src/r_main.c **** 				switch(last_received)
+ 696                             		.loc 1 288 0
+ 697 0480 AF 00 00                		movw	ax, !_last_received
+ 698 0483 BD F0                   		movw	r8, ax
+ 699 0485 44 F3 00                		cmpw	ax, #243 
+ 700 0488 61 F8                   		sknz 
+ 701 048a EC CE 06 00             		br	!!.L28
+ 702 048e AD F0                   		movw	ax, r8
+ 703 0490 44 F3 00                		cmpw	ax, #243 
+ 704 0493 71 FF                   		xor1 CY,a.7
+ 705 0495 61 F3                   		sknh 
+ 706 0497 EC E7 04 00             		br	!!.L29
+ 707 049b AD F0                   		movw	ax, r8
+ 708 049d 44 F0 00                		cmpw	ax, #240 
+ 709 04a0 61 F8                   		sknz 
+ 710 04a2 EC 33 05 00             		br	!!.L30
+ 711 04a6 AD F0                   		movw	ax, r8
+ 712 04a8 44 F0 00                		cmpw	ax, #240 
+ 713 04ab 71 FF                   		xor1 CY,a.7
+ 714 04ad 61 F3                   		sknh 
+ 715 04af EC CD 04 00             		br	!!.L31
+ 716 04b3 AD F0                   		movw	ax, r8
+ 717 04b5 44 7F 00                		cmpw	ax, #127 
+ 718 04b8 61 F8                   		sknz 
+ 719 04ba EC 57 05 00             		br	!!.L32
+ 720 04be AD F0                   		movw	ax, r8
+ 721 04c0 44 80 00                		cmpw	ax, #128 
+ 722 04c3 61 F8                   		sknz 
+ 723 04c5 EC 7B 05 00             		br	!!.L33
+ 724 04c9 EC 77 0B 00             		br	!!.L27
+ 725                             	.L31:
+ 726 04cd AD F0                   		movw	ax, r8
+ 727 04cf 44 F1 00                		cmpw	ax, #241 
+ 728 04d2 61 F8                   		sknz 
+ 729 04d4 EC 43 05 00             		br	!!.L34
+ 730 04d8 AD F0                   		movw	ax, r8
+ 731 04da 44 F2 00                		cmpw	ax, #242 
+ 732 04dd 61 F8                   		sknz 
+ 733 04df EC EB 05 00             		br	!!.L35
+ 734 04e3 EC 77 0B 00             		br	!!.L27
+ 735                             	.L29:
+ 736 04e7 AD F0                   		movw	ax, r8
+ 737 04e9 44 F8 00                		cmpw	ax, #248 
+ 738 04ec 61 F8                   		sknz 
+ 739 04ee EC AB 08 00             		br	!!.L36
+ 740 04f2 AD F0                   		movw	ax, r8
+ 741 04f4 44 F8 00                		cmpw	ax, #248 
+ 742 04f7 71 FF                   		xor1 CY,a.7
+ 743 04f9 61 F3                   		sknh 
+ 744 04fb EC 19 05 00             		br	!!.L37
+ 745 04ff AD F0                   		movw	ax, r8
+ 746 0501 44 F4 00                		cmpw	ax, #244 
+ 747 0504 61 F8                   		sknz 
+ 748 0506 EC 80 07 00             		br	!!.L38
+ 749 050a AD F0                   		movw	ax, r8
+ 750 050c 44 F7 00                		cmpw	ax, #247 
+ 751 050f 61 F8                   		sknz 
+ 752 0511 EC BD 07 00             		br	!!.L39
+ 753 0515 EC 77 0B 00             		br	!!.L27
+ 754                             	.L37:
+ 755 0519 AD F0                   		movw	ax, r8
+ 756 051b 44 F9 00                		cmpw	ax, #249 
+ 757 051e 61 F8                   		sknz 
+ 758 0520 EC A4 09 00             		br	!!.L40
+ 759 0524 AD F0                   		movw	ax, r8
+ 760 0526 44 FE 00                		cmpw	ax, #254 
+ 761 0529 61 F8                   		sknz 
+ 762 052b EC 14 0B 00             		br	!!.L41
+ 763 052f EC 77 0B 00             		br	!!.L27
+ 764                             	.L30:
+ 765                             	.LBB4:
+ 289:../src/r_main.c **** 				{
+ 290:../src/r_main.c **** 				case 0xF0 :
+ 291:../src/r_main.c **** 
+ 292:../src/r_main.c **** 
+ 293:../src/r_main.c **** 					BUZZ_LOOP();
+ 766                             		.loc 1 293 0
+ 767 0533 FC 00 00 00             		call	!!%code(_BUZZ_LOOP)
+ 294:../src/r_main.c **** 					R_TAU0_Channel2_Start();
+ 768                             		.loc 1 294 0
+ 769 0537 FC 00 00 00             		call	!!%code(_R_TAU0_Channel2_Start)
+ 295:../src/r_main.c **** 					buzzerON = 1;
+ 770                             		.loc 1 295 0
+ 771 053b E6                      		onew	ax
+ 772 053c BF 00 00                		movw	!_buzzerON, ax
+ 296:../src/r_main.c **** 
+ 297:../src/r_main.c **** 
+ 298:../src/r_main.c **** 					break;
+ 773                             		.loc 1 298 0
+ 774 053f EC 77 0B 00             		br	!!.L27
+ 775                             	.L34:
+ 299:../src/r_main.c **** 
+ 300:../src/r_main.c **** 				case 0xF1 :
+ 301:../src/r_main.c **** 					buzzerON = 0;
+ 776                             		.loc 1 301 0
+ 777 0543 F6                      		clrw	ax
+ 778 0544 BF 00 00                		movw	!_buzzerON, ax
+ 302:../src/r_main.c **** 					R_PCLBUZ0_Stop();
+ 779                             		.loc 1 302 0
+ 780 0547 FC 00 00 00             		call	!!%code(_R_PCLBUZ0_Stop)
+ 303:../src/r_main.c **** 					buzFlag = 0;
+ 781                             		.loc 1 303 0
+ 782 054b F6                      		clrw	ax
+ 783 054c BF 00 00                		movw	!_buzFlag, ax
+ 304:../src/r_main.c **** 					R_TAU0_Channel2_Stop();
+ 784                             		.loc 1 304 0
+ 785 054f FC 00 00 00             		call	!!%code(_R_TAU0_Channel2_Stop)
+ 305:../src/r_main.c **** 
+ 306:../src/r_main.c **** 					break;
+ 786                             		.loc 1 306 0
+ 787 0553 EC 77 0B 00             		br	!!.L27
+ 788                             	.L32:
+ 307:../src/r_main.c **** 
+ 308:../src/r_main.c **** 
+ 309:../src/r_main.c **** 
+ 310:../src/r_main.c **** 
+ 311:../src/r_main.c **** 				case 0x7F :
+ 312:../src/r_main.c **** 
+ 313:../src/r_main.c **** 					if(rx_count<40)
+ 789                             		.loc 1 313 0
+ 790 0557 AF 00 00                		movw	ax, !_rx_count
+ 791 055a BD F0                   		movw	r8, ax
+ 792 055c 44 27 00                		cmpw	ax, #39 
+ 793 055f 71 FF                   		xor1 CY,a.7
+ 794 0561 61 F3                   		sknh 
+ 795 0563 EC 77 05 00             		br	!!.L43
+ 314:../src/r_main.c **** 						rx_count++;
+ 796                             		.loc 1 314 0
+ 797 0567 AF 00 00                		movw	ax, !_rx_count
+ 798 056a BD F0                   		movw	r8, ax
+ 799 056c A6 F0                   		incw	r8
+ 800 056e AD F0                   		movw	ax, r8
+ 801 0570 BF 00 00                		movw	!_rx_count, ax
+ 315:../src/r_main.c **** 
+ 316:../src/r_main.c **** 					break;
+ 802                             		.loc 1 316 0
+ 803 0573 EC 77 0B 00             		br	!!.L27
+ 804                             	.L43:
+ 805 0577 EC 77 0B 00             		br	!!.L27
+ 806                             	.L33:
+ 317:../src/r_main.c **** 
+ 318:../src/r_main.c **** 
+ 319:../src/r_main.c **** 				case 0x80 :
+ 320:../src/r_main.c **** 					//Normal
+ 321:../src/r_main.c **** 					R_TAU0_Channel3_Start();
+ 807                             		.loc 1 321 0
+ 808 057b FC 00 00 00             		call	!!%code(_R_TAU0_Channel3_Start)
+ 322:../src/r_main.c **** 					cycleFlag = 1;
+ 809                             		.loc 1 322 0
+ 810 057f E6                      		onew	ax
+ 811 0580 BF 00 00                		movw	!_cycleFlag, ax
+ 323:../src/r_main.c **** 					uart1Status = R_UART1_Send(&uart1RxBuf[rx_count], 1);
+ 812                             		.loc 1 323 0
+ 813 0583 AF 00 00                		movw	ax, !_rx_count
+ 814 0586 BD F0                   		movw	r8, ax
+ 815 0588 04 00 00                		addw	ax, #_uart1RxBuf
+ 816 058b BD F0                   		movw	r8, ax
+ 817 058d B8 00                   		movw	[sp], ax
+ 818 058f E6                      		onew	ax
+ 819 0590 B8 02                   		movw	[sp+2], ax
+ 820 0592 FC 00 00 00             		call	!!%code(_R_UART1_Send)
+ 821 0596 AD F0                   		movw	ax, r8
+ 822 0598 BF 00 00                		movw	!_uart1Status, ax
+ 324:../src/r_main.c **** 					Mode = 'N';
+ 823                             		.loc 1 324 0
+ 824 059b C8 41 4E                		mov	[sp+65], #78
+ 325:../src/r_main.c **** 					char word[] = {"Normal Mode"};
+ 825                             		.loc 1 325 0
+ 826 059e C8 1D 4E                		mov	[sp+29], #78
+ 827 05a1 C8 1E 6F                		mov	[sp+30], #111
+ 828 05a4 C8 1F 72                		mov	[sp+31], #114
+ 829 05a7 C8 20 6D                		mov	[sp+32], #109
+ 830 05aa C8 21 61                		mov	[sp+33], #97
+ 831 05ad C8 22 6C                		mov	[sp+34], #108
+ 832 05b0 C8 23 20                		mov	[sp+35], #32
+ 833 05b3 C8 24 4D                		mov	[sp+36], #77
+ 834 05b6 C8 25 6F                		mov	[sp+37], #111
+ 835 05b9 C8 26 64                		mov	[sp+38], #100
+ 836 05bc C8 27 65                		mov	[sp+39], #101
+ 837 05bf C8 28 00                		mov	[sp+40], #0
+ 326:../src/r_main.c **** 					int length = sizeof(word) -1;
+ 838                             		.loc 1 326 0
+ 839 05c2 30 0B 00                		movw	ax, #11
+ 840 05c5 B8 3A                   		movw	[sp+58], ax
+ 327:../src/r_main.c **** 					powerCheck();
+ 841                             		.loc 1 327 0
+ 842 05c7 FC 00 00 00             		call	!!%code(_powerCheck)
+ 328:../src/r_main.c **** 					Start(word, length);
+ 843                             		.loc 1 328 0
+ 844 05cb C9 F0 42 00             		movw	r8, #66
+ 845 05cf AE F8                   		movw	ax, sp
+ 846 05d1 BD F0                   		movw	r8, ax
+ 847 05d3 04 42 00                		addw	ax, #66
+ 848 05d6 BD F0                   		movw	r8, ax
+ 849 05d8 04 DB FF                		addw	ax, #-37
+ 850 05db B8 00                   		movw	[sp], ax
+ 851 05dd A8 3A                   		movw	ax, [sp+58]
+ 852 05df BD F0                   		movw	r8, ax
+ 853 05e1 B8 02                   		movw	[sp+2], ax
+ 854 05e3 FC 00 00 00             		call	!!%code(_Start)
+ 329:../src/r_main.c **** 
+ 330:../src/r_main.c **** 
+ 331:../src/r_main.c **** 					break;
+ 855                             		.loc 1 331 0
+ 856 05e7 EC 77 0B 00             		br	!!.L27
+ 857                             	.L35:
+ 332:../src/r_main.c **** 
+ 333:../src/r_main.c **** 
+ 334:../src/r_main.c **** 
+ 335:../src/r_main.c **** 				case 0xF2 :
+ 336:../src/r_main.c **** 					//Set_Clock
+ 337:../src/r_main.c **** 
+ 338:../src/r_main.c **** 
+ 339:../src/r_main.c **** 
+ 340:../src/r_main.c **** 					uart1TxBuf[0] = uart1RxBuf[rx_count];
+ 858                             		.loc 1 340 0
+ 859 05eb AF 00 00                		movw	ax, !_rx_count
+ 860 05ee BD F0                   		movw	r8, ax
+ 861 05f0 04 00 00                		addw	ax, #_uart1RxBuf
+ 862 05f3 16                      		movw	hl, ax
+ 863 05f4 8B                      		mov	a, [hl]
+ 864 05f5 9D F0                   		mov	r8, a
+ 865 05f7 9F 00 00                		mov	!_uart1TxBuf, a
+ 341:../src/r_main.c **** 
+ 342:../src/r_main.c **** 
+ 343:../src/r_main.c **** 					uart1Status = R_UART1_Send(uart1TxBuf, 1);
+ 866                             		.loc 1 343 0
+ 867 05fa 30 00 00                		movw	ax, #_uart1TxBuf
+ 868 05fd B8 00                   		movw	[sp], ax
+ 869 05ff E6                      		onew	ax
+ 870 0600 B8 02                   		movw	[sp+2], ax
+ 871 0602 FC 00 00 00             		call	!!%code(_R_UART1_Send)
+ 872 0606 AD F0                   		movw	ax, r8
+ 873 0608 BF 00 00                		movw	!_uart1Status, ax
+ 344:../src/r_main.c **** 
+ 345:../src/r_main.c **** 					my_time.sec = Dec_to_BCD(uart1RxBuf[4]);
+ 874                             		.loc 1 345 0
+ 875 060b 8F 00 00                		mov	a, !_uart1RxBuf+4
+ 876 060e 9D F0                   		mov	r8, a
+ 877 0610 CD F1 00                		mov	r9, #0
+ 878 0613 AD F0                   		movw	ax, r8
+ 879 0615 B8 00                   		movw	[sp], ax
+ 880 0617 FC 00 00 00             		call	!!%code(_Dec_to_BCD)
+ 881 061b 8D F0                   		mov	a, r8
+ 882 061d 98 33                   		mov	[sp+51], a
+ 346:../src/r_main.c **** 					my_time.min = Dec_to_BCD(uart1RxBuf[3]);
+ 883                             		.loc 1 346 0
+ 884 061f 8F 00 00                		mov	a, !_uart1RxBuf+3
+ 885 0622 9D F0                   		mov	r8, a
+ 886 0624 CD F1 00                		mov	r9, #0
+ 887 0627 AD F0                   		movw	ax, r8
+ 888 0629 B8 00                   		movw	[sp], ax
+ 889 062b FC 00 00 00             		call	!!%code(_Dec_to_BCD)
+ 890 062f 8D F0                   		mov	a, r8
+ 891 0631 98 34                   		mov	[sp+52], a
+ 347:../src/r_main.c **** 					my_time.hour = Dec_to_BCD(uart1RxBuf[2]);
+ 892                             		.loc 1 347 0
+ 893 0633 8F 00 00                		mov	a, !_uart1RxBuf+2
+ 894 0636 9D F0                   		mov	r8, a
+ 895 0638 CD F1 00                		mov	r9, #0
+ 896 063b AD F0                   		movw	ax, r8
+ 897 063d B8 00                   		movw	[sp], ax
+ 898 063f FC 00 00 00             		call	!!%code(_Dec_to_BCD)
+ 899 0643 8D F0                   		mov	a, r8
+ 900 0645 98 35                   		mov	[sp+53], a
+ 348:../src/r_main.c **** 					my_time.day = Dec_to_BCD(uart1RxBuf[1]);
+ 901                             		.loc 1 348 0
+ 902 0647 8F 00 00                		mov	a, !_uart1RxBuf+1
+ 903 064a 9D F0                   		mov	r8, a
+ 904 064c CD F1 00                		mov	r9, #0
+ 905 064f AD F0                   		movw	ax, r8
+ 906 0651 B8 00                   		movw	[sp], ax
+ 907 0653 FC 00 00 00             		call	!!%code(_Dec_to_BCD)
+ 908 0657 8D F0                   		mov	a, r8
+ 909 0659 98 36                   		mov	[sp+54], a
+ 349:../src/r_main.c **** 					my_time.month = Dec_to_BCD(uart1RxBuf[0]);
+ 910                             		.loc 1 349 0
+ 911 065b 8F 00 00                		mov	a, !_uart1RxBuf
+ 912 065e 9D F0                   		mov	r8, a
+ 913 0660 CD F1 00                		mov	r9, #0
+ 914 0663 AD F0                   		movw	ax, r8
+ 915 0665 B8 00                   		movw	[sp], ax
+ 916 0667 FC 00 00 00             		call	!!%code(_Dec_to_BCD)
+ 917 066b 8D F0                   		mov	a, r8
+ 918 066d 98 38                   		mov	[sp+56], a
+ 919                             	.L44:
+ 350:../src/r_main.c **** 
+ 351:../src/r_main.c **** 
+ 352:../src/r_main.c **** 					do{
+ 353:../src/r_main.c **** 						rtcStatus = R_RTC_Set_CounterValue(my_time); // Update the RTC
+ 920                             		.loc 1 353 0 discriminator 1
+ 921 066f 88 33                   		mov	a, [sp+51]
+ 922 0671 9D F0                   		mov	r8, a
+ 923 0673 98 00                   		mov	[sp], a
+ 924 0675 88 34                   		mov	a, [sp+52]
+ 925 0677 9D F0                   		mov	r8, a
+ 926 0679 98 01                   		mov	[sp+1], a
+ 927 067b 88 35                   		mov	a, [sp+53]
+ 928 067d 9D F0                   		mov	r8, a
+ 929 067f 98 02                   		mov	[sp+2], a
+ 930 0681 88 36                   		mov	a, [sp+54]
+ 931 0683 9D F0                   		mov	r8, a
+ 932 0685 98 03                   		mov	[sp+3], a
+ 933 0687 88 37                   		mov	a, [sp+55]
+ 934 0689 9D F0                   		mov	r8, a
+ 935 068b 98 04                   		mov	[sp+4], a
+ 936 068d 88 38                   		mov	a, [sp+56]
+ 937 068f 9D F0                   		mov	r8, a
+ 938 0691 98 05                   		mov	[sp+5], a
+ 939 0693 88 39                   		mov	a, [sp+57]
+ 940 0695 9D F0                   		mov	r8, a
+ 941 0697 98 06                   		mov	[sp+6], a
+ 942 0699 FC 00 00 00             		call	!!%code(_R_RTC_Set_CounterValue)
+ 943 069d AD F0                   		movw	ax, r8
+ 944 069f BF 00 00                		movw	!_rtcStatus, ax
+ 354:../src/r_main.c **** 
+ 355:../src/r_main.c **** 					} while(rtcStatus != MD_OK);
+ 945                             		.loc 1 355 0 discriminator 1
+ 946 06a2 BD F0                   		movw	r8, ax
+ 947 06a4 44 00 00                		cmpw	ax, #0 
+ 948 06a7 61 E8                   		skz 
+ 949 06a9 EC 6F 06 00             		br	!!.L44
+ 356:../src/r_main.c **** 					clearBuff(rx_count);
+ 950                             		.loc 1 356 0
+ 951 06ad AF 00 00                		movw	ax, !_rx_count
+ 952 06b0 BD F0                   		movw	r8, ax
+ 953 06b2 B8 00                   		movw	[sp], ax
+ 954 06b4 FC 00 00 00             		call	!!%code(_clearBuff)
+ 357:../src/r_main.c **** 					rx_count = 0;
+ 955                             		.loc 1 357 0
+ 956 06b8 F6                      		clrw	ax
+ 957 06b9 BF 00 00                		movw	!_rx_count, ax
+ 358:../src/r_main.c **** 
+ 359:../src/r_main.c **** 					Start(clockSet,sizeof(clockSet)-1);
+ 958                             		.loc 1 359 0
+ 959 06bc 30 00 00                		movw	ax, #_clockSet
+ 960 06bf B8 00                   		movw	[sp], ax
+ 961 06c1 30 09 00                		movw	ax, #9
+ 962 06c4 B8 02                   		movw	[sp+2], ax
+ 963 06c6 FC 00 00 00             		call	!!%code(_Start)
+ 360:../src/r_main.c **** 					break;
+ 964                             		.loc 1 360 0
+ 965 06ca EC 77 0B 00             		br	!!.L27
+ 966                             	.L28:
+ 361:../src/r_main.c **** 
+ 362:../src/r_main.c **** 				case 0xF3 :
+ 363:../src/r_main.c **** 					//Receive_Date/Time
+ 364:../src/r_main.c **** 
+ 365:../src/r_main.c **** 
+ 366:../src/r_main.c **** 
+ 367:../src/r_main.c **** 					uart1TxBuf[0] = uart1RxBuf[rx_count];
+ 967                             		.loc 1 367 0
+ 968 06ce AF 00 00                		movw	ax, !_rx_count
+ 969 06d1 BD F0                   		movw	r8, ax
+ 970 06d3 04 00 00                		addw	ax, #_uart1RxBuf
+ 971 06d6 16                      		movw	hl, ax
+ 972 06d7 8B                      		mov	a, [hl]
+ 973 06d8 9D F0                   		mov	r8, a
+ 974 06da 9F 00 00                		mov	!_uart1TxBuf, a
+ 975                             	.L45:
+ 368:../src/r_main.c **** 
+ 369:../src/r_main.c **** 
+ 370:../src/r_main.c **** 
+ 371:../src/r_main.c **** 					do{
+ 372:../src/r_main.c **** 
+ 373:../src/r_main.c **** 						rtcStatus = R_RTC_Get_CounterValue(my_time_point); // Update the RTC
+ 976                             		.loc 1 373 0 discriminator 1
+ 977 06dd A8 3E                   		movw	ax, [sp+62]
+ 978 06df BD F0                   		movw	r8, ax
+ 979 06e1 B8 00                   		movw	[sp], ax
+ 980 06e3 FC 00 00 00             		call	!!%code(_R_RTC_Get_CounterValue)
+ 981 06e7 AD F0                   		movw	ax, r8
+ 982 06e9 BF 00 00                		movw	!_rtcStatus, ax
+ 374:../src/r_main.c **** 
+ 375:../src/r_main.c **** 					} while(rtcStatus != MD_OK);
+ 983                             		.loc 1 375 0 discriminator 1
+ 984 06ec BD F0                   		movw	r8, ax
+ 985 06ee 44 00 00                		cmpw	ax, #0 
+ 986 06f1 61 E8                   		skz 
+ 987 06f3 EC DD 06 00             		br	!!.L45
+ 376:../src/r_main.c **** 
+ 377:../src/r_main.c **** 					uart1TxBuf[5] = BCD_to_Dec(my_time.sec);
+ 988                             		.loc 1 377 0
+ 989 06f7 88 33                   		mov	a, [sp+51]
+ 990 06f9 9D F0                   		mov	r8, a
+ 991 06fb CD F1 00                		mov	r9, #0
+ 992 06fe AD F0                   		movw	ax, r8
+ 993 0700 B8 00                   		movw	[sp], ax
+ 994 0702 FC 00 00 00             		call	!!%code(_BCD_to_Dec)
+ 995 0706 8D F0                   		mov	a, r8
+ 996 0708 9F 00 00                		mov	!_uart1TxBuf+5, a
+ 378:../src/r_main.c **** 					uart1TxBuf[4] = BCD_to_Dec(my_time.min);
+ 997                             		.loc 1 378 0
+ 998 070b 88 34                   		mov	a, [sp+52]
+ 999 070d 9D F0                   		mov	r8, a
+ 1000 070f CD F1 00                		mov	r9, #0
+ 1001 0712 AD F0                   		movw	ax, r8
+ 1002 0714 B8 00                   		movw	[sp], ax
+ 1003 0716 FC 00 00 00             		call	!!%code(_BCD_to_Dec)
+ 1004 071a 8D F0                   		mov	a, r8
+ 1005 071c 9F 00 00                		mov	!_uart1TxBuf+4, a
+ 379:../src/r_main.c **** 					uart1TxBuf[3] = BCD_to_Dec(my_time.hour);
+ 1006                             		.loc 1 379 0
+ 1007 071f 88 35                   		mov	a, [sp+53]
+ 1008 0721 9D F0                   		mov	r8, a
+ 1009 0723 CD F1 00                		mov	r9, #0
+ 1010 0726 AD F0                   		movw	ax, r8
+ 1011 0728 B8 00                   		movw	[sp], ax
+ 1012 072a FC 00 00 00             		call	!!%code(_BCD_to_Dec)
+ 1013 072e 8D F0                   		mov	a, r8
+ 1014 0730 9F 00 00                		mov	!_uart1TxBuf+3, a
+ 380:../src/r_main.c **** 					uart1TxBuf[2] = BCD_to_Dec(my_time.day);
+ 1015                             		.loc 1 380 0
+ 1016 0733 88 36                   		mov	a, [sp+54]
+ 1017 0735 9D F0                   		mov	r8, a
+ 1018 0737 CD F1 00                		mov	r9, #0
+ 1019 073a AD F0                   		movw	ax, r8
+ 1020 073c B8 00                   		movw	[sp], ax
+ 1021 073e FC 00 00 00             		call	!!%code(_BCD_to_Dec)
+ 1022 0742 8D F0                   		mov	a, r8
+ 1023 0744 9F 00 00                		mov	!_uart1TxBuf+2, a
+ 381:../src/r_main.c **** 					uart1TxBuf[1] = BCD_to_Dec(my_time.month);
+ 1024                             		.loc 1 381 0
+ 1025 0747 88 38                   		mov	a, [sp+56]
+ 1026 0749 9D F0                   		mov	r8, a
+ 1027 074b CD F1 00                		mov	r9, #0
+ 1028 074e AD F0                   		movw	ax, r8
+ 1029 0750 B8 00                   		movw	[sp], ax
+ 1030 0752 FC 00 00 00             		call	!!%code(_BCD_to_Dec)
+ 1031 0756 8D F0                   		mov	a, r8
+ 1032 0758 9F 00 00                		mov	!_uart1TxBuf+1, a
+ 382:../src/r_main.c **** 
+ 383:../src/r_main.c **** 					uart1Status = R_UART1_Send(uart1TxBuf,6);
+ 1033                             		.loc 1 383 0
+ 1034 075b 30 00 00                		movw	ax, #_uart1TxBuf
+ 1035 075e B8 00                   		movw	[sp], ax
+ 1036 0760 30 06 00                		movw	ax, #6
+ 1037 0763 B8 02                   		movw	[sp+2], ax
+ 1038 0765 FC 00 00 00             		call	!!%code(_R_UART1_Send)
+ 1039 0769 AD F0                   		movw	ax, r8
+ 1040 076b BF 00 00                		movw	!_uart1Status, ax
+ 384:../src/r_main.c **** 					Start(clockGet,sizeof(clockGet)-1);
+ 1041                             		.loc 1 384 0
+ 1042 076e 30 00 00                		movw	ax, #_clockGet
+ 1043 0771 B8 00                   		movw	[sp], ax
+ 1044 0773 30 09 00                		movw	ax, #9
+ 1045 0776 B8 02                   		movw	[sp+2], ax
+ 1046 0778 FC 00 00 00             		call	!!%code(_Start)
+ 385:../src/r_main.c **** 					break;
+ 1047                             		.loc 1 385 0
+ 1048 077c EC 77 0B 00             		br	!!.L27
+ 1049                             	.L38:
+ 386:../src/r_main.c **** 
+ 387:../src/r_main.c **** 				case 0xF4 :
+ 388:../src/r_main.c **** 					//Display&Scroll
+ 389:../src/r_main.c **** 
+ 390:../src/r_main.c **** 					//temp = (uint8_t) last_received;
+ 391:../src/r_main.c **** 					uart1Status = R_UART1_Send(&uart1RxBuf[rx_count], 1);
+ 1050                             		.loc 1 391 0
+ 1051 0780 AF 00 00                		movw	ax, !_rx_count
+ 1052 0783 BD F0                   		movw	r8, ax
+ 1053 0785 04 00 00                		addw	ax, #_uart1RxBuf
+ 1054 0788 BD F0                   		movw	r8, ax
+ 1055 078a B8 00                   		movw	[sp], ax
+ 1056 078c E6                      		onew	ax
+ 1057 078d B8 02                   		movw	[sp+2], ax
+ 1058 078f FC 00 00 00             		call	!!%code(_R_UART1_Send)
+ 1059 0793 AD F0                   		movw	ax, r8
+ 1060 0795 BF 00 00                		movw	!_uart1Status, ax
+ 392:../src/r_main.c **** 
+ 393:../src/r_main.c **** 					Start(uart1RxBuf,rx_count);
+ 1061                             		.loc 1 393 0
+ 1062 0798 AF 00 00                		movw	ax, !_rx_count
+ 1063 079b BD F0                   		movw	r8, ax
+ 1064 079d 30 00 00                		movw	ax, #_uart1RxBuf
+ 1065 07a0 B8 00                   		movw	[sp], ax
+ 1066 07a2 AD F0                   		movw	ax, r8
+ 1067 07a4 B8 02                   		movw	[sp+2], ax
+ 1068 07a6 FC 00 00 00             		call	!!%code(_Start)
+ 394:../src/r_main.c **** 
+ 395:../src/r_main.c **** 					clearBuff(rx_count);
+ 1069                             		.loc 1 395 0
+ 1070 07aa AF 00 00                		movw	ax, !_rx_count
+ 1071 07ad BD F0                   		movw	r8, ax
+ 1072 07af B8 00                   		movw	[sp], ax
+ 1073 07b1 FC 00 00 00             		call	!!%code(_clearBuff)
+ 396:../src/r_main.c **** 					rx_count=0;
+ 1074                             		.loc 1 396 0
+ 1075 07b5 F6                      		clrw	ax
+ 1076 07b6 BF 00 00                		movw	!_rx_count, ax
+ 397:../src/r_main.c **** 					break;
+ 1077                             		.loc 1 397 0
+ 1078 07b9 EC 77 0B 00             		br	!!.L27
+ 1079                             	.L39:
+ 398:../src/r_main.c **** 
+ 399:../src/r_main.c **** 				case 0xF7 :
+ 400:../src/r_main.c **** 
+ 401:../src/r_main.c **** 					//Read Temperature Sample
+ 402:../src/r_main.c **** 
+ 403:../src/r_main.c **** 					timer = 0;
+ 1080                             		.loc 1 403 0
+ 1081 07bd F5 00 00                		clrb	!_timer
+ 404:../src/r_main.c **** 
+ 405:../src/r_main.c **** 					//Send data to slave
+ 406:../src/r_main.c **** 					IIC_Buf[0] = 0xF3;
+ 1082                             		.loc 1 406 0
+ 1083 07c0 CF 00 00 F3             		mov	!_IIC_Buf, #-13
+ 407:../src/r_main.c **** 
+ 408:../src/r_main.c **** 					while(R_IICA0_Busy_Check());
+ 1084                             		.loc 1 408 0
+ 1085 07c4 00                      		nop
+ 1086                             	.L46:
+ 1087                             		.loc 1 408 0 is_stmt 0 discriminator 1
+ 1088 07c5 FC 00 00 00             		call	!!%code(_R_IICA0_Busy_Check)
+ 1089 07c9 AD F0                   		movw	ax, r8
+ 1090 07cb 44 00 00                		cmpw	ax, #0 
+ 1091 07ce 61 E8                   		skz 
+ 1092 07d0 EC C5 07 00             		br	!!.L46
+ 409:../src/r_main.c **** 
+ 410:../src/r_main.c **** 					R_IICA0_Master_Send(0x80, IIC_Buf, 1, 0);
+ 1093                             		.loc 1 410 0 is_stmt 1
+ 1094 07d4 C8 00 80                		mov	[sp], #-128
+ 1095 07d7 30 00 00                		movw	ax, #_IIC_Buf
+ 1096 07da B8 02                   		movw	[sp+2], ax
+ 1097 07dc E6                      		onew	ax
+ 1098 07dd B8 04                   		movw	[sp+4], ax
+ 1099 07df C8 06 00                		mov	[sp+6], #0
+ 1100 07e2 FC 00 00 00             		call	!!%code(_R_IICA0_Master_Send)
+ 411:../src/r_main.c **** 
+ 412:../src/r_main.c **** 					while(IIC_Flag == 0)
+ 1101                             		.loc 1 412 0
+ 1102 07e6 EC EB 07 00             		br	!!.L47
+ 1103                             	.L48:
+ 413:../src/r_main.c **** 						NOP();
+ 1104                             		.loc 1 413 0
+ 1105                             	 ; 413 "../src/r_main.c" 1
+ 1106 07ea 00                      		nop
+ 1107                             	 ; 0 "" 2
+ 1108                             	.L47:
+ 412:../src/r_main.c **** 					while(IIC_Flag == 0)
+ 1109                             		.loc 1 412 0 discriminator 1
+ 1110 07eb AF 00 00                		movw	ax, !_IIC_Flag
+ 1111 07ee BD F0                   		movw	r8, ax
+ 1112 07f0 44 00 00                		cmpw	ax, #0 
+ 1113 07f3 61 F8                   		sknz 
+ 1114 07f5 EC EA 07 00             		br	!!.L48
+ 414:../src/r_main.c **** 					IIC_Flag = 0;
+ 1115                             		.loc 1 414 0
+ 1116 07f9 F6                      		clrw	ax
+ 1117 07fa BF 00 00                		movw	!_IIC_Flag, ax
+ 415:../src/r_main.c **** 
+ 416:../src/r_main.c **** 					delayNoInt(300);
+ 1118                             		.loc 1 416 0
+ 1119 07fd 30 2C 01                		movw	ax, #300
+ 1120 0800 B8 00                   		movw	[sp], ax
+ 1121 0802 FC 00 00 00             		call	!!%code(_delayNoInt)
+ 417:../src/r_main.c **** 
+ 418:../src/r_main.c **** 					R_IICA0_StopCondition();
+ 1122                             		.loc 1 418 0
+ 1123 0806 FC 00 00 00             		call	!!%code(_R_IICA0_StopCondition)
+ 419:../src/r_main.c **** 
+ 420:../src/r_main.c **** 					delayNoInt(50000);
+ 1124                             		.loc 1 420 0
+ 1125 080a 30 50 C3                		movw	ax, #-15536
+ 1126 080d B8 00                   		movw	[sp], ax
+ 1127 080f F6                      		clrw	ax
+ 1128 0810 B8 02                   		movw	[sp+2], ax
+ 1129 0812 FC 00 00 00             		call	!!%code(_delayNoInt)
+ 421:../src/r_main.c **** 					delayNoInt(39000);
+ 1130                             		.loc 1 421 0
+ 1131 0816 30 58 98                		movw	ax, #-26536
+ 1132 0819 B8 00                   		movw	[sp], ax
+ 1133 081b F6                      		clrw	ax
+ 1134 081c B8 02                   		movw	[sp+2], ax
+ 1135 081e FC 00 00 00             		call	!!%code(_delayNoInt)
+ 422:../src/r_main.c **** 					//Wait for transmit end
+ 423:../src/r_main.c **** 
+ 424:../src/r_main.c **** 
+ 425:../src/r_main.c **** 					//Read data from slave
+ 426:../src/r_main.c **** 					R_IICA0_Master_Receive(0x81, IIC_Buf, 2, 0);
+ 1136                             		.loc 1 426 0
+ 1137 0822 C8 00 81                		mov	[sp], #-127
+ 1138 0825 30 00 00                		movw	ax, #_IIC_Buf
+ 1139 0828 B8 02                   		movw	[sp+2], ax
+ 1140 082a 30 02 00                		movw	ax, #2
+ 1141 082d B8 04                   		movw	[sp+4], ax
+ 1142 082f C8 06 00                		mov	[sp+6], #0
+ 1143 0832 FC 00 00 00             		call	!!%code(_R_IICA0_Master_Receive)
+ 427:../src/r_main.c **** 
+ 428:../src/r_main.c **** 					while(IIC_Flag == 0)
+ 1144                             		.loc 1 428 0
+ 1145 0836 EC 3B 08 00             		br	!!.L49
+ 1146                             	.L50:
+ 429:../src/r_main.c **** 						NOP();
+ 1147                             		.loc 1 429 0
+ 1148                             	 ; 429 "../src/r_main.c" 1
+ 1149 083a 00                      		nop
+ 1150                             	 ; 0 "" 2
+ 1151                             	.L49:
+ 428:../src/r_main.c **** 					while(IIC_Flag == 0)
+ 1152                             		.loc 1 428 0 discriminator 1
+ 1153 083b AF 00 00                		movw	ax, !_IIC_Flag
+ 1154 083e BD F0                   		movw	r8, ax
+ 1155 0840 44 00 00                		cmpw	ax, #0 
+ 1156 0843 61 F8                   		sknz 
+ 1157 0845 EC 3A 08 00             		br	!!.L50
+ 430:../src/r_main.c **** 					IIC_Flag = 0;
+ 1158                             		.loc 1 430 0
+ 1159 0849 F6                      		clrw	ax
+ 1160 084a BF 00 00                		movw	!_IIC_Flag, ax
+ 431:../src/r_main.c **** 
+ 432:../src/r_main.c **** 					delayNoInt(1000);
+ 1161                             		.loc 1 432 0
+ 1162 084d 30 E8 03                		movw	ax, #1000
+ 1163 0850 B8 00                   		movw	[sp], ax
+ 1164 0852 FC 00 00 00             		call	!!%code(_delayNoInt)
+ 433:../src/r_main.c **** 
+ 434:../src/r_main.c **** 					R_IICA0_StopCondition(); //Send stop condition
+ 1165                             		.loc 1 434 0
+ 1166 0856 FC 00 00 00             		call	!!%code(_R_IICA0_StopCondition)
+ 435:../src/r_main.c **** 
+ 436:../src/r_main.c **** 					convTempHum = ((((uint16_t)IIC_Buf[0]) << 8) + IIC_Buf[1]);
+ 1167                             		.loc 1 436 0
+ 1168 085a 8F 00 00                		mov	a, !_IIC_Buf
+ 1169 085d 9D F0                   		mov	r8, a
+ 1170 085f CD F1 00                		mov	r9, #0
+ 1171 0862 AD F0                   		movw	ax, r8
+ 1172 0864 31 8D                   		shlw	ax, 8
+ 1173 0866 BD F2                   		movw	r10, ax
+ 1174 0868 8F 00 00                		mov	a, !_IIC_Buf+1
+ 1175 086b 9D F0                   		mov	r8, a
+ 1176 086d CD F1 00                		mov	r9, #0
+ 1177 0870 AD F2                   		movw	ax, r10
+ 1178 0872 06 F0                   		addw	ax, r8
+ 1179 0874 BD F0                   		movw	r8, ax
+ 1180 0876 BF 00 00                		movw	!_convTempHum, ax
+ 437:../src/r_main.c **** 
+ 438:../src/r_main.c **** 
+ 439:../src/r_main.c **** 					IIC_Buf[1] = convertTemp(IIC_Buf);
+ 1181                             		.loc 1 439 0
+ 1182 0879 30 00 00                		movw	ax, #_IIC_Buf
+ 1183 087c B8 00                   		movw	[sp], ax
+ 1184 087e FC 00 00 00             		call	!!%code(_convertTemp)
+ 1185 0882 8D F0                   		mov	a, r8
+ 1186 0884 9F 00 00                		mov	!_IIC_Buf+1, a
+ 440:../src/r_main.c **** 					IIC_Buf[0] = 0xF7;
+ 1187                             		.loc 1 440 0
+ 1188 0887 CF 00 00 F7             		mov	!_IIC_Buf, #-9
+ 441:../src/r_main.c **** 
+ 442:../src/r_main.c **** 
+ 443:../src/r_main.c **** 					R_UART1_Send(IIC_Buf, 2);
+ 1189                             		.loc 1 443 0
+ 1190 088b 30 00 00                		movw	ax, #_IIC_Buf
+ 1191 088e B8 00                   		movw	[sp], ax
+ 1192 0890 30 02 00                		movw	ax, #2
+ 1193 0893 B8 02                   		movw	[sp+2], ax
+ 1194 0895 FC 00 00 00             		call	!!%code(_R_UART1_Send)
+ 444:../src/r_main.c **** 					Start(tempArr,sizeof(tempArr)-1);
+ 1195                             		.loc 1 444 0
+ 1196 0899 30 00 00                		movw	ax, #_tempArr
+ 1197 089c B8 00                   		movw	[sp], ax
+ 1198 089e 30 0B 00                		movw	ax, #11
+ 1199 08a1 B8 02                   		movw	[sp+2], ax
+ 1200 08a3 FC 00 00 00             		call	!!%code(_Start)
+ 445:../src/r_main.c **** 					break;
+ 1201                             		.loc 1 445 0
+ 1202 08a7 EC 77 0B 00             		br	!!.L27
+ 1203                             	.L36:
+ 446:../src/r_main.c **** 
+ 447:../src/r_main.c **** 				case 0xF8 :
+ 448:../src/r_main.c **** 
+ 449:../src/r_main.c **** 					//Read Humidity Sample
+ 450:../src/r_main.c **** 					if (R_IICA0_Busy_Check() == MD_OK) //Check bus busy
+ 1204                             		.loc 1 450 0
+ 1205 08ab FC 00 00 00             		call	!!%code(_R_IICA0_Busy_Check)
+ 1206 08af AD F0                   		movw	ax, r8
+ 1207 08b1 44 00 00                		cmpw	ax, #0 
+ 1208 08b4 61 E8                   		skz 
+ 1209 08b6 EC 92 09 00             		br	!!.L51
+ 451:../src/r_main.c **** 					{
+ 452:../src/r_main.c **** 						timer = 0;
+ 1210                             		.loc 1 452 0
+ 1211 08ba F5 00 00                		clrb	!_timer
+ 453:../src/r_main.c **** 						IIC_Flag = 0;
+ 1212                             		.loc 1 453 0
+ 1213 08bd F6                      		clrw	ax
+ 1214 08be BF 00 00                		movw	!_IIC_Flag, ax
+ 454:../src/r_main.c **** 						//Send data to slave
+ 455:../src/r_main.c **** 						IIC_Buf[0] = 0xF5;
+ 1215                             		.loc 1 455 0
+ 1216 08c1 CF 00 00 F5             		mov	!_IIC_Buf, #-11
+ 456:../src/r_main.c **** 						R_IICA0_Master_Send(0x80, IIC_Buf, 1, 0);
+ 1217                             		.loc 1 456 0
+ 1218 08c5 C8 00 80                		mov	[sp], #-128
+ 1219 08c8 30 00 00                		movw	ax, #_IIC_Buf
+ 1220 08cb B8 02                   		movw	[sp+2], ax
+ 1221 08cd E6                      		onew	ax
+ 1222 08ce B8 04                   		movw	[sp+4], ax
+ 1223 08d0 C8 06 00                		mov	[sp+6], #0
+ 1224 08d3 FC 00 00 00             		call	!!%code(_R_IICA0_Master_Send)
+ 457:../src/r_main.c **** 						delayNoInt(290);
+ 1225                             		.loc 1 457 0
+ 1226 08d7 30 22 01                		movw	ax, #290
+ 1227 08da B8 00                   		movw	[sp], ax
+ 1228 08dc FC 00 00 00             		call	!!%code(_delayNoInt)
+ 458:../src/r_main.c **** 						//Wait for transmit end
+ 459:../src/r_main.c **** 						while(IIC_Flag == 0)
+ 1229                             		.loc 1 459 0
+ 1230 08e0 EC E5 08 00             		br	!!.L52
+ 1231                             	.L53:
+ 460:../src/r_main.c **** 							NOP();
+ 1232                             		.loc 1 460 0
+ 1233                             	 ; 460 "../src/r_main.c" 1
+ 1234 08e4 00                      		nop
+ 1235                             	 ; 0 "" 2
+ 1236                             	.L52:
+ 459:../src/r_main.c **** 						while(IIC_Flag == 0)
+ 1237                             		.loc 1 459 0 discriminator 1
+ 1238 08e5 AF 00 00                		movw	ax, !_IIC_Flag
+ 1239 08e8 BD F0                   		movw	r8, ax
+ 1240 08ea 44 00 00                		cmpw	ax, #0 
+ 1241 08ed 61 F8                   		sknz 
+ 1242 08ef EC E4 08 00             		br	!!.L53
+ 461:../src/r_main.c **** 						IIC_Flag = 0;
+ 1243                             		.loc 1 461 0
+ 1244 08f3 F6                      		clrw	ax
+ 1245 08f4 BF 00 00                		movw	!_IIC_Flag, ax
+ 462:../src/r_main.c **** 						for(timer = 0;timer< 90;timer++)
+ 1246                             		.loc 1 462 0
+ 1247 08f7 F5 00 00                		clrb	!_timer
+ 1248 08fa EC 13 09 00             		br	!!.L54
+ 1249                             	.L55:
+ 463:../src/r_main.c **** 						{
+ 464:../src/r_main.c **** 							delayNoInt(1000);
+ 1250                             		.loc 1 464 0 discriminator 2
+ 1251 08fe 30 E8 03                		movw	ax, #1000
+ 1252 0901 B8 00                   		movw	[sp], ax
+ 1253 0903 FC 00 00 00             		call	!!%code(_delayNoInt)
+ 462:../src/r_main.c **** 						for(timer = 0;timer< 90;timer++)
+ 1254                             		.loc 1 462 0 discriminator 2
+ 1255 0907 8F 00 00                		mov	a, !_timer
+ 1256 090a 9D F0                   		mov	r8, a
+ 1257 090c A4 F0                   		inc	r8
+ 1258 090e 8D F0                   		mov	a, r8
+ 1259 0910 9F 00 00                		mov	!_timer, a
+ 1260                             	.L54:
+ 462:../src/r_main.c **** 						for(timer = 0;timer< 90;timer++)
+ 1261                             		.loc 1 462 0 is_stmt 0 discriminator 1
+ 1262 0913 8F 00 00                		mov	a, !_timer
+ 1263 0916 9D F0                   		mov	r8, a
+ 1264 0918 4A F0 59                		cmp	r8, #89 
+ 1265 091b 61 E3                   		skh 
+ 1266 091d EC FE 08 00             		br	!!.L55
+ 465:../src/r_main.c **** 						}
+ 466:../src/r_main.c **** 
+ 467:../src/r_main.c **** 						//Read data from slave
+ 468:../src/r_main.c **** 						R_IICA0_Master_Receive(0x81, IIC_Buf, 2, 0);
+ 1267                             		.loc 1 468 0 is_stmt 1
+ 1268 0921 C8 00 81                		mov	[sp], #-127
+ 1269 0924 30 00 00                		movw	ax, #_IIC_Buf
+ 1270 0927 B8 02                   		movw	[sp+2], ax
+ 1271 0929 30 02 00                		movw	ax, #2
+ 1272 092c B8 04                   		movw	[sp+4], ax
+ 1273 092e C8 06 00                		mov	[sp+6], #0
+ 1274 0931 FC 00 00 00             		call	!!%code(_R_IICA0_Master_Receive)
+ 469:../src/r_main.c **** 
+ 470:../src/r_main.c **** 						timer = 0;
+ 1275                             		.loc 1 470 0
+ 1276 0935 F5 00 00                		clrb	!_timer
+ 471:../src/r_main.c **** 						//Wait for received end
+ 472:../src/r_main.c **** 						while(IIC_Flag == 0)
+ 1277                             		.loc 1 472 0
+ 1278 0938 EC 3D 09 00             		br	!!.L56
+ 1279                             	.L57:
+ 473:../src/r_main.c **** 							NOP();
+ 1280                             		.loc 1 473 0
+ 1281                             	 ; 473 "../src/r_main.c" 1
+ 1282 093c 00                      		nop
+ 1283                             	 ; 0 "" 2
+ 1284                             	.L56:
+ 472:../src/r_main.c **** 						while(IIC_Flag == 0)
+ 1285                             		.loc 1 472 0 discriminator 1
+ 1286 093d AF 00 00                		movw	ax, !_IIC_Flag
+ 1287 0940 BD F0                   		movw	r8, ax
+ 1288 0942 44 00 00                		cmpw	ax, #0 
+ 1289 0945 61 F8                   		sknz 
+ 1290 0947 EC 3C 09 00             		br	!!.L57
+ 474:../src/r_main.c **** 						IIC_Flag = 0;
+ 1291                             		.loc 1 474 0
+ 1292 094b F6                      		clrw	ax
+ 1293 094c BF 00 00                		movw	!_IIC_Flag, ax
+ 475:../src/r_main.c **** 						R_IICA0_StopCondition(); //Send stop condition
+ 1294                             		.loc 1 475 0
+ 1295 094f FC 00 00 00             		call	!!%code(_R_IICA0_StopCondition)
+ 476:../src/r_main.c **** 
+ 477:../src/r_main.c **** 						convTempHum = (((((uint16_t)IIC_Buf[0]) << 8) | 0x0000) + (IIC_Buf[1] | 0x0000));
+ 1296                             		.loc 1 477 0
+ 1297 0953 8F 00 00                		mov	a, !_IIC_Buf
+ 1298 0956 9D F0                   		mov	r8, a
+ 1299 0958 CD F1 00                		mov	r9, #0
+ 1300 095b AD F0                   		movw	ax, r8
+ 1301 095d 31 8D                   		shlw	ax, 8
+ 1302 095f BD F2                   		movw	r10, ax
+ 1303 0961 8F 00 00                		mov	a, !_IIC_Buf+1
+ 1304 0964 9D F0                   		mov	r8, a
+ 1305 0966 CD F1 00                		mov	r9, #0
+ 1306 0969 AD F2                   		movw	ax, r10
+ 1307 096b 06 F0                   		addw	ax, r8
+ 1308 096d BD F0                   		movw	r8, ax
+ 1309 096f BF 00 00                		movw	!_convTempHum, ax
+ 478:../src/r_main.c **** 
+ 479:../src/r_main.c **** 
+ 480:../src/r_main.c **** 						IIC_Buf[1] = convertHumid(IIC_Buf);
+ 1310                             		.loc 1 480 0
+ 1311 0972 30 00 00                		movw	ax, #_IIC_Buf
+ 1312 0975 B8 00                   		movw	[sp], ax
+ 1313 0977 FC 00 00 00             		call	!!%code(_convertHumid)
+ 1314 097b 8D F0                   		mov	a, r8
+ 1315 097d 9F 00 00                		mov	!_IIC_Buf+1, a
+ 481:../src/r_main.c **** 						IIC_Buf[0] = 0xF8;
+ 1316                             		.loc 1 481 0
+ 1317 0980 CF 00 00 F8             		mov	!_IIC_Buf, #-8
+ 482:../src/r_main.c **** 
+ 483:../src/r_main.c **** 
+ 484:../src/r_main.c **** 						R_UART1_Send(IIC_Buf, 2);
+ 1318                             		.loc 1 484 0
+ 1319 0984 30 00 00                		movw	ax, #_IIC_Buf
+ 1320 0987 B8 00                   		movw	[sp], ax
+ 1321 0989 30 02 00                		movw	ax, #2
+ 1322 098c B8 02                   		movw	[sp+2], ax
+ 1323 098e FC 00 00 00             		call	!!%code(_R_UART1_Send)
+ 1324                             	.L51:
+ 485:../src/r_main.c **** 
+ 486:../src/r_main.c **** 
+ 487:../src/r_main.c **** 
+ 488:../src/r_main.c **** 					}
+ 489:../src/r_main.c **** 					Start(humArr,sizeof(humArr)-1);
+ 1325                             		.loc 1 489 0
+ 1326 0992 30 00 00                		movw	ax, #_humArr
+ 1327 0995 B8 00                   		movw	[sp], ax
+ 1328 0997 30 08 00                		movw	ax, #8
+ 1329 099a B8 02                   		movw	[sp+2], ax
+ 1330 099c FC 00 00 00             		call	!!%code(_Start)
+ 490:../src/r_main.c **** 					break;
+ 1331                             		.loc 1 490 0
+ 1332 09a0 EC 77 0B 00             		br	!!.L27
+ 1333                             	.L40:
+ 491:../src/r_main.c **** 
+ 492:../src/r_main.c **** 
+ 493:../src/r_main.c **** 				case 0xF9 :
+ 494:../src/r_main.c **** 					//calculate pressure
+ 495:../src/r_main.c **** 					if (R_IICA0_Busy_Check() == MD_OK)
+ 1334                             		.loc 1 495 0
+ 1335 09a4 FC 00 00 00             		call	!!%code(_R_IICA0_Busy_Check)
+ 1336 09a8 AD F0                   		movw	ax, r8
+ 1337 09aa 44 00 00                		cmpw	ax, #0 
+ 1338 09ad 61 E8                   		skz 
+ 1339 09af EC 02 0B 00             		br	!!.L58
+ 496:../src/r_main.c **** 					{
+ 497:../src/r_main.c **** 						//prime pressure sensor
+ 498:../src/r_main.c **** 
+ 499:../src/r_main.c **** 						IIC_Buf[0] = 0x12;
+ 1340                             		.loc 1 499 0
+ 1341 09b3 CF 00 00 12             		mov	!_IIC_Buf, #18
+ 500:../src/r_main.c **** 						IIC_Buf[1] = 0x00;
+ 1342                             		.loc 1 500 0
+ 1343 09b7 F5 00 00                		clrb	!_IIC_Buf+1
+ 501:../src/r_main.c **** 
+ 502:../src/r_main.c **** 						while(R_IICA0_Busy_Check());
+ 1344                             		.loc 1 502 0
+ 1345 09ba 00                      		nop
+ 1346                             	.L59:
+ 1347                             		.loc 1 502 0 is_stmt 0 discriminator 1
+ 1348 09bb FC 00 00 00             		call	!!%code(_R_IICA0_Busy_Check)
+ 1349 09bf AD F0                   		movw	ax, r8
+ 1350 09c1 44 00 00                		cmpw	ax, #0 
+ 1351 09c4 61 E8                   		skz 
+ 1352 09c6 EC BB 09 00             		br	!!.L59
+ 503:../src/r_main.c **** 
+ 504:../src/r_main.c **** 						R_IICA0_Master_Send(0xC0, IIC_Buf, 2, 0);
+ 1353                             		.loc 1 504 0 is_stmt 1
+ 1354 09ca C8 00 C0                		mov	[sp], #-64
+ 1355 09cd 30 00 00                		movw	ax, #_IIC_Buf
+ 1356 09d0 B8 02                   		movw	[sp+2], ax
+ 1357 09d2 30 02 00                		movw	ax, #2
+ 1358 09d5 B8 04                   		movw	[sp+4], ax
+ 1359 09d7 C8 06 00                		mov	[sp+6], #0
+ 1360 09da FC 00 00 00             		call	!!%code(_R_IICA0_Master_Send)
+ 505:../src/r_main.c **** 
+ 506:../src/r_main.c **** 
+ 507:../src/r_main.c **** 
+ 508:../src/r_main.c **** 						delayNoInt(60000);
+ 1361                             		.loc 1 508 0
+ 1362 09de 30 60 EA                		movw	ax, #-5536
+ 1363 09e1 B8 00                   		movw	[sp], ax
+ 1364 09e3 F6                      		clrw	ax
+ 1365 09e4 B8 02                   		movw	[sp+2], ax
+ 1366 09e6 FC 00 00 00             		call	!!%code(_delayNoInt)
+ 509:../src/r_main.c **** 
+ 510:../src/r_main.c **** 						IIC_Buf[0] = 0x00;
+ 1367                             		.loc 1 510 0
+ 1368 09ea F5 00 00                		clrb	!_IIC_Buf
+ 511:../src/r_main.c **** 						R_IICA0_Master_Send(0xC0, IIC_Buf, 1, 0);
+ 1369                             		.loc 1 511 0
+ 1370 09ed C8 00 C0                		mov	[sp], #-64
+ 1371 09f0 30 00 00                		movw	ax, #_IIC_Buf
+ 1372 09f3 B8 02                   		movw	[sp+2], ax
+ 1373 09f5 E6                      		onew	ax
+ 1374 09f6 B8 04                   		movw	[sp+4], ax
+ 1375 09f8 C8 06 00                		mov	[sp+6], #0
+ 1376 09fb FC 00 00 00             		call	!!%code(_R_IICA0_Master_Send)
+ 512:../src/r_main.c **** 						delayNoInt(60000);
+ 1377                             		.loc 1 512 0
+ 1378 09ff 30 60 EA                		movw	ax, #-5536
+ 1379 0a02 B8 00                   		movw	[sp], ax
+ 1380 0a04 F6                      		clrw	ax
+ 1381 0a05 B8 02                   		movw	[sp+2], ax
+ 1382 0a07 FC 00 00 00             		call	!!%code(_delayNoInt)
+ 513:../src/r_main.c **** 
+ 514:../src/r_main.c **** 						//Read data from slave
+ 515:../src/r_main.c **** 						R_IICA0_Master_Receive(0xC1, IIC_Buf, 4, 0);
+ 1383                             		.loc 1 515 0
+ 1384 0a0b C8 00 C1                		mov	[sp], #-63
+ 1385 0a0e 30 00 00                		movw	ax, #_IIC_Buf
+ 1386 0a11 B8 02                   		movw	[sp+2], ax
+ 1387 0a13 30 04 00                		movw	ax, #4
+ 1388 0a16 B8 04                   		movw	[sp+4], ax
+ 1389 0a18 C8 06 00                		mov	[sp+6], #0
+ 1390 0a1b FC 00 00 00             		call	!!%code(_R_IICA0_Master_Receive)
+ 516:../src/r_main.c **** 
+ 517:../src/r_main.c **** 						delayNoInt(60000);
+ 1391                             		.loc 1 517 0
+ 1392 0a1f 30 60 EA                		movw	ax, #-5536
+ 1393 0a22 B8 00                   		movw	[sp], ax
+ 1394 0a24 F6                      		clrw	ax
+ 1395 0a25 B8 02                   		movw	[sp+2], ax
+ 1396 0a27 FC 00 00 00             		call	!!%code(_delayNoInt)
+ 518:../src/r_main.c **** 
+ 519:../src/r_main.c **** 						presMplValue = (IIC_Buf[0]*256U) + IIC_Buf[1];
+ 1397                             		.loc 1 519 0
+ 1398 0a2b 8F 00 00                		mov	a, !_IIC_Buf
+ 1399 0a2e 9D F0                   		mov	r8, a
+ 1400 0a30 CD F1 00                		mov	r9, #0
+ 1401 0a33 AD F0                   		movw	ax, r8
+ 1402 0a35 31 8D                   		shlw	ax, 8
+ 1403 0a37 BD F2                   		movw	r10, ax
+ 1404 0a39 8F 00 00                		mov	a, !_IIC_Buf+1
+ 1405 0a3c 9D F0                   		mov	r8, a
+ 1406 0a3e CD F1 00                		mov	r9, #0
+ 1407 0a41 AD F2                   		movw	ax, r10
+ 1408 0a43 06 F0                   		addw	ax, r8
+ 1409 0a45 BD F0                   		movw	r8, ax
+ 1410 0a47 BF 00 00                		movw	!_presMplValue, ax
+ 520:../src/r_main.c **** 						tempMplValue = (IIC_Buf[2]*256U) + IIC_Buf[3];
+ 1411                             		.loc 1 520 0
+ 1412 0a4a 8F 00 00                		mov	a, !_IIC_Buf+2
+ 1413 0a4d 9D F0                   		mov	r8, a
+ 1414 0a4f CD F1 00                		mov	r9, #0
+ 1415 0a52 AD F0                   		movw	ax, r8
+ 1416 0a54 31 8D                   		shlw	ax, 8
+ 1417 0a56 BD F2                   		movw	r10, ax
+ 1418 0a58 8F 00 00                		mov	a, !_IIC_Buf+3
+ 1419 0a5b 9D F0                   		mov	r8, a
+ 1420 0a5d CD F1 00                		mov	r9, #0
+ 1421 0a60 AD F2                   		movw	ax, r10
+ 1422 0a62 06 F0                   		addw	ax, r8
+ 1423 0a64 BD F0                   		movw	r8, ax
+ 1424 0a66 BF 00 00                		movw	!_tempMplValue, ax
+ 521:../src/r_main.c **** 
+ 522:../src/r_main.c **** 						// Calculate pComp using a fixed-point calculation - return is a scaled pComp
+ 523:../src/r_main.c **** 						pComp = calcPComp(presMplValue, tempMplValue);
+ 1425                             		.loc 1 523 0
+ 1426 0a69 AF 00 00                		movw	ax, !_presMplValue
+ 1427 0a6c BD F2                   		movw	r10, ax
+ 1428 0a6e AF 00 00                		movw	ax, !_tempMplValue
+ 1429 0a71 BD F0                   		movw	r8, ax
+ 1430 0a73 AD F2                   		movw	ax, r10
+ 1431 0a75 B8 00                   		movw	[sp], ax
+ 1432 0a77 AD F0                   		movw	ax, r8
+ 1433 0a79 B8 02                   		movw	[sp+2], ax
+ 1434 0a7b FC 00 00 00             		call	!!%code(_calcPComp)
+ 1435 0a7f AD F0                   		movw	ax, r8
+ 1436 0a81 BF 00 00                		movw	!_pComp, ax
+ 524:../src/r_main.c **** 						// Calculate the pressure range factor (115 - 50) = 65 and
+ 525:../src/r_main.c **** 						// then the pressure from Pressure = pComp * (115-50)/1024 + 50
+ 526:../src/r_main.c **** 						// The product 65*pComp must be shifted by 13 shifts i.e. (1024 x 4 times x 0.5) to obtain
+ 527:../src/r_main.c **** 						// pressValue in 0.5 kPa units (we need to transmit to the PC in 0.5 kPa units)
+ 528:../src/r_main.c **** 						pressValue = (uint16_t) (((int32_t) pComp * 65) >> 13) + 100;
+ 1437                             		.loc 1 528 0
+ 1438 0a84 BD F2                   		movw	r10, ax
+ 1439 0a86 B8 16                   		movw	[sp+22], ax
+ 1440 0a88 BD F0                   		movw	r8, ax
+ 1441 0a8a B8 12                   		movw	[sp+18], ax
+ 1442 0a8c C8 14 00                		mov	[sp+20], #0
+ 1443 0a8f C8 15 00                		mov	[sp+21], #0
+ 1444 0a92 A8 12                   		movw	ax, [sp+18]
+ 1445 0a94 BD F2                   		movw	r10, ax
+ 1446 0a96 B8 08                   		movw	[sp+8], ax
+ 1447 0a98 A8 14                   		movw	ax, [sp+20]
+ 1448 0a9a BD F0                   		movw	r8, ax
+ 1449 0a9c B8 0A                   		movw	[sp+10], ax
+ 1450 0a9e A8 0A 31 6D 98 0B 88 09 		movw ax,[sp+10] @ shlw ax,6 @ mov [sp+11],a @ mov a,[sp+9] @ mov x,a @ mov a, [sp+10] @ shlw ax,6 
+ 1450      70 88 0A 31 6D 98 0A A8 
+ 1450      08 31 6D B8 08 
+ 1451 0ab3 FB F8 FF                		movw	hl, sp
+ 1452 0ab6 A8 08                   		movw ax,[sp+8] 
+ 1453 0ab8 61 09 12                		addw ax,[hl+18] 
+ 1454 0abb BD F0                   		movw r8, ax 
+ 1455 0abd A8 0A                   		movw ax,[sp+10] 
+ 1456 0abf 61 D8                   		sknc 
+ 1457 0ac1 A1                      		incw ax 
+ 1458 0ac2 61 09 14                		addw ax,[hl+20] 
+ 1459 0ac5 BD F2                   		movw r10,ax
+ 1460 0ac7 D8 F1 8D F2 31 3D 98 0E 		mov x,r9           @ mov a,r10 @ shlw ax,3 @ mov [sp+14],a @ movw ax,r10 @ shlw ax,3 @ mov [sp+15]
+ 1460      AD F2 31 3D 98 0F AD F2 
+ 1460      31 DF B8 10 
+ 1461 0adb A8 0E                   		movw	ax, [sp+14]
+ 1462 0add BD F2                   		movw	r10, ax
+ 1463 0adf B8 0C                   		movw	[sp+12], ax
+ 1464 0ae1 04 64 00                		addw	ax, #100
+ 1465 0ae4 BD F0                   		movw	r8, ax
+ 1466 0ae6 BF 00 00                		movw	!_pressValue, ax
+ 529:../src/r_main.c **** 
+ 530:../src/r_main.c **** 
+ 531:../src/r_main.c **** 
+ 532:../src/r_main.c **** 						IIC_Buf[1] = pressValue;
+ 1467                             		.loc 1 532 0
+ 1468 0ae9 BD F0                   		movw	r8, ax
+ 1469 0aeb 8D F0                   		mov	a, r8
+ 1470 0aed 9F 00 00                		mov	!_IIC_Buf+1, a
+ 533:../src/r_main.c **** 						IIC_Buf[0] = 0xF9;
+ 1471                             		.loc 1 533 0
+ 1472 0af0 CF 00 00 F9             		mov	!_IIC_Buf, #-7
+ 534:../src/r_main.c **** 
+ 535:../src/r_main.c **** 
+ 536:../src/r_main.c **** 						R_UART1_Send(IIC_Buf, 2);
+ 1473                             		.loc 1 536 0
+ 1474 0af4 30 00 00                		movw	ax, #_IIC_Buf
+ 1475 0af7 B8 00                   		movw	[sp], ax
+ 1476 0af9 30 02 00                		movw	ax, #2
+ 1477 0afc B8 02                   		movw	[sp+2], ax
+ 1478 0afe FC 00 00 00             		call	!!%code(_R_UART1_Send)
+ 1479                             	.L58:
+ 537:../src/r_main.c **** 
+ 538:../src/r_main.c **** 					}
+ 539:../src/r_main.c **** 					Start(PresArr,sizeof(PresArr)-1);
+ 1480                             		.loc 1 539 0
+ 1481 0b02 30 00 00                		movw	ax, #_PresArr
+ 1482 0b05 B8 00                   		movw	[sp], ax
+ 1483 0b07 30 08 00                		movw	ax, #8
+ 1484 0b0a B8 02                   		movw	[sp+2], ax
+ 1485 0b0c FC 00 00 00             		call	!!%code(_Start)
+ 540:../src/r_main.c **** 					break;
+ 1486                             		.loc 1 540 0
+ 1487 0b10 EC 77 0B 00             		br	!!.L27
+ 1488                             	.L41:
+ 541:../src/r_main.c **** 
+ 542:../src/r_main.c **** 				case 0xFE :
+ 543:../src/r_main.c **** 
+ 544:../src/r_main.c **** 
+ 545:../src/r_main.c **** 
+ 546:../src/r_main.c **** 					if(sec_flag)
+ 1489                             		.loc 1 546 0
+ 1490 0b14 AF 00 00                		movw	ax, !_sec_flag
+ 1491 0b17 BD F0                   		movw	r8, ax
+ 1492 0b19 44 00 00                		cmpw	ax, #0 
+ 1493 0b1c 61 F8                   		sknz 
+ 1494 0b1e EC 30 0B 00             		br	!!.L60
+ 547:../src/r_main.c **** 					{
+ 548:../src/r_main.c **** 						calWind();
+ 1495                             		.loc 1 548 0
+ 1496 0b22 FC 00 00 00             		call	!!%code(_calWind)
+ 549:../src/r_main.c **** 						wind_8bit = (uint8_t)WindSpeed;
+ 1497                             		.loc 1 549 0
+ 1498 0b26 AF 00 00                		movw	ax, !_WindSpeed
+ 1499 0b29 BD F0                   		movw	r8, ax
+ 1500 0b2b 8D F0                   		mov	a, r8
+ 1501 0b2d 9F 00 00                		mov	!_wind_8bit, a
+ 1502                             	.L60:
+ 550:../src/r_main.c **** 					}
+ 551:../src/r_main.c **** 
+ 552:../src/r_main.c **** 
+ 553:../src/r_main.c **** 					IIC_Buf[1] = WindSpeed;
+ 1503                             		.loc 1 553 0
+ 1504 0b30 AF 00 00                		movw	ax, !_WindSpeed
+ 1505 0b33 BD F0                   		movw	r8, ax
+ 1506 0b35 8D F0                   		mov	a, r8
+ 1507 0b37 9F 00 00                		mov	!_IIC_Buf+1, a
+ 554:../src/r_main.c **** 					IIC_Buf[0] = 0xFE;
+ 1508                             		.loc 1 554 0
+ 1509 0b3a CF 00 00 FE             		mov	!_IIC_Buf, #-2
+ 555:../src/r_main.c **** 
+ 556:../src/r_main.c **** 					while(R_IICA0_Busy_Check());
+ 1510                             		.loc 1 556 0
+ 1511 0b3e 00                      		nop
+ 1512                             	.L61:
+ 1513                             		.loc 1 556 0 is_stmt 0 discriminator 1
+ 1514 0b3f FC 00 00 00             		call	!!%code(_R_IICA0_Busy_Check)
+ 1515 0b43 AD F0                   		movw	ax, r8
+ 1516 0b45 44 00 00                		cmpw	ax, #0 
+ 1517 0b48 61 E8                   		skz 
+ 1518 0b4a EC 3F 0B 00             		br	!!.L61
+ 557:../src/r_main.c **** 
+ 558:../src/r_main.c **** 					R_UART1_Send(IIC_Buf, 2);
+ 1519                             		.loc 1 558 0 is_stmt 1
+ 1520 0b4e 30 00 00                		movw	ax, #_IIC_Buf
+ 1521 0b51 B8 00                   		movw	[sp], ax
+ 1522 0b53 30 02 00                		movw	ax, #2
+ 1523 0b56 B8 02                   		movw	[sp+2], ax
+ 1524 0b58 FC 00 00 00             		call	!!%code(_R_UART1_Send)
+ 559:../src/r_main.c **** 
+ 560:../src/r_main.c **** 					delayNoInt(50000);
+ 1525                             		.loc 1 560 0
+ 1526 0b5c 30 50 C3                		movw	ax, #-15536
+ 1527 0b5f B8 00                   		movw	[sp], ax
+ 1528 0b61 F6                      		clrw	ax
+ 1529 0b62 B8 02                   		movw	[sp+2], ax
+ 1530 0b64 FC 00 00 00             		call	!!%code(_delayNoInt)
+ 561:../src/r_main.c **** 
+ 562:../src/r_main.c **** 					Start(WindArr,sizeof(WindArr)-1);
+ 1531                             		.loc 1 562 0
+ 1532 0b68 30 00 00                		movw	ax, #_WindArr
+ 1533 0b6b B8 00                   		movw	[sp], ax
+ 1534 0b6d 30 0A 00                		movw	ax, #10
+ 1535 0b70 B8 02                   		movw	[sp+2], ax
+ 1536 0b72 FC 00 00 00             		call	!!%code(_Start)
+ 563:../src/r_main.c **** 					break;
+ 1537                             		.loc 1 563 0
+ 1538 0b76 00                      		nop
+ 1539                             	.L27:
+ 1540                             	.LBE4:
+ 564:../src/r_main.c **** 
+ 565:../src/r_main.c **** 
+ 566:../src/r_main.c **** 				}
+ 567:../src/r_main.c **** 			}
+ 568:../src/r_main.c **** 
+ 569:../src/r_main.c **** 			uart1Status = R_UART1_Receive(&uart1RxBuf[rx_count],1);
+ 1541                             		.loc 1 569 0
+ 1542 0b77 AF 00 00                		movw	ax, !_rx_count
+ 1543 0b7a BD F0                   		movw	r8, ax
+ 1544 0b7c 04 00 00                		addw	ax, #_uart1RxBuf
+ 1545 0b7f BD F0                   		movw	r8, ax
+ 1546 0b81 B8 00                   		movw	[sp], ax
+ 1547 0b83 E6                      		onew	ax
+ 1548 0b84 B8 02                   		movw	[sp+2], ax
+ 1549 0b86 FC 00 00 00             		call	!!%code(_R_UART1_Receive)
+ 1550 0b8a AD F0                   		movw	ax, r8
+ 1551 0b8c BF 00 00                		movw	!_uart1Status, ax
+ 1552                             	.L14:
+ 570:../src/r_main.c **** 
+ 571:../src/r_main.c **** 
+ 572:../src/r_main.c **** 
+ 573:../src/r_main.c **** 		}
+ 574:../src/r_main.c **** 		if (S != oldstate)
+ 1553                             		.loc 1 574 0
+ 1554 0b8f C9 F0 03 FF             		movw	r8, #-253
+ 1555 0b93 AD F0                   		movw	ax, r8
+ 1556 0b95 BD F2                   		movw	r10, ax
+ 1557 0b97 FA F2                   		movw	hl, r10
+ 1558 0b99 8B                      		mov	a, [hl]
+ 1559 0b9a 9D F0                   		mov	r8, a
+ 1560 0b9c 31 1A                   		shr	a, 1
+ 1561 0b9e 9D F0                   		mov	r8, a
+ 1562 0ba0 5A F0 01                		and	r8, #1
+ 1563 0ba3 8D F0                   		mov	a, r8
+ 1564 0ba5 70                      		mov	x, a 
+ 1565 0ba6 51 00                   		mov	a, #0
+ 1566 0ba8 BD F2                   		movw	r10, ax
+ 1567 0baa 8F 00 00                		mov	a, !_oldstate
+ 1568 0bad 9D F0                   		mov	r8, a
+ 1569 0baf CD F1 00                		mov	r9, #0
+ 1570 0bb2 AD F2                   		movw	ax, r10
+ 1571 0bb4 46 F0                   		cmpw	ax, r8 
+ 1572 0bb6 61 F8                   		sknz 
+ 1573 0bb8 EC C4 0B 00             		br	!!.L62
+ 575:../src/r_main.c **** 		{
+ 576:../src/r_main.c **** 			powerCheck();
+ 1574                             		.loc 1 576 0
+ 1575 0bbc FC 00 00 00             		call	!!%code(_powerCheck)
+ 577:../src/r_main.c **** 
+ 578:../src/r_main.c **** 		}
+ 579:../src/r_main.c **** 
+ 580:../src/r_main.c **** 	}
+ 1576                             		.loc 1 580 0
+ 1577 0bc0 EC 3D 02 00             		br	!!.L63
+ 1578                             	.L62:
+ 1579 0bc4 EC 3D 02 00             		br	!!.L63
+ 1580                             	.LFE0:
+ 1582                             		.global	_R_MAIN_UserInit
+ 1584                             	_R_MAIN_UserInit:
+ 1585                             	.LFB1:
+ 581:../src/r_main.c **** 
+ 582:../src/r_main.c **** 
+ 583:../src/r_main.c **** 	/* End user code. Do not edit comment generated here */
+ 584:../src/r_main.c **** }
+ 585:../src/r_main.c **** 
+ 586:../src/r_main.c **** 
+ 587:../src/r_main.c **** /**************************************************************************************************
+ 588:../src/r_main.c ****  * Function Name: R_MAIN_UserInit
+ 589:../src/r_main.c ****  * Description  : This function adds user code before implementing main function.
+ 590:../src/r_main.c ****  * Arguments    : None
+ 591:../src/r_main.c ****  * Return Value : None
+ 592:../src/r_main.c ****  **************************************************************************************************
+ 593:../src/r_main.c **** void R_MAIN_UserInit(void)
+ 594:../src/r_main.c **** {
+ 1586                             		.loc 1 594 0
+ 595:../src/r_main.c **** 	/* Start user code. Do not edit comment generated here */
+ 596:../src/r_main.c **** 	EI();
+ 1587                             		.loc 1 596 0
+ 1588                             	 ; 596 "../src/r_main.c" 1
+ 1589 0bc8 71 7A FA                		ei
+ 1590                             	 ; 0 "" 2
+ 597:../src/r_main.c **** 
+ 598:../src/r_main.c **** 	/* End user code. Do not edit comment generated here */
+ 599:../src/r_main.c **** }
+ 1591                             		.loc 1 599 0
+ 1592 0bcb D7                      		ret
+ 1593                             	.LFE1:
+ 1637                             	.Letext0:
+ 1638                             		.file 2 "../src/iodefine.h"
+ 1639                             		.file 3 "../src/r_cg_macrodriver.h"
+ 1640                             		.file 4 "../src/r_cg_rtc.h"
+ 1641                             		.file 5 "../src/r_cg_userdefine.h"

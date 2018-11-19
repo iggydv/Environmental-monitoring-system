@@ -1,0 +1,836 @@
+Archive member included because of file (symbol)
+
+libED314_Projek1.a(memcpy.o)  ./src/r_main.o (memcpy)
+C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_fixunssfsi.o)
+                              ./src/r_cg_serial_user.o (__fixunssfsi)
+C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_addsub_sf.o)
+                              ./src/r_cg_serial_user.o (__subsf3)
+C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_mul_sf.o)
+                              ./src/r_cg_serial_user.o (__mulsf3)
+C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_div_sf.o)
+                              ./src/r_cg_serial_user.o (__divsf3)
+C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_ge_sf.o)
+                              C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_fixunssfsi.o) (__gesf2)
+C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_si_to_sf.o)
+                              ./src/r_cg_serial_user.o (__floatsisf)
+C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_sf_to_si.o)
+                              C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_fixunssfsi.o) (__fixsfsi)
+C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_thenan_sf.o)
+                              C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_addsub_sf.o) (__thenan_sf)
+C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(mulsi3.o)
+                              ./src/r_cg_serial_user.o (__mulsi3)
+C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(divmodqi.o)
+                              ./src/my_lcd.o (__udivqi3)
+C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_muldi3.o)
+                              C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_mul_sf.o) (__muldi3)
+C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_lshrdi3.o)
+                              C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_mul_sf.o) (__lshrdi3)
+C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_clzsi2.o)
+                              C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_si_to_sf.o) (__clzsi2)
+C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_pack_sf.o)
+                              C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_addsub_sf.o) (__pack_f)
+C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_unpack_sf.o)
+                              C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_addsub_sf.o) (__unpack_f)
+C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_fpcmp_parts_sf.o)
+                              C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_ge_sf.o) (__fpcmp_parts_f)
+C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_clz.o)
+                              C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_clzsi2.o) (__clz_tab)
+
+Allocating common symbols
+Common symbol       size              file
+
+g_uart1_rx_length   0x2               ./src/r_cg_serial.o
+gp_iica0_rx_address
+                    0x2               ./src/r_cg_serial.o
+statusByte          0x1               ./src/r_main.o
+g_uart1_rx_count    0x2               ./src/r_cg_serial.o
+dataBuf             0x29              ./src/r_main.o
+valueDisplay        0x2               ./src/r_main.o
+alarmConditionLowTemp
+                    0x1               ./src/r_main.o
+wind_8bit           0x1               ./src/my_functions.o
+my_time_point       0x2               ./src/r_main.o
+mpl115Coef_b1       0x2               ./src/r_cg_serial_user.o
+alarmCount          0x2               ./src/r_main.o
+uart1RxFlag         0x2               ./src/r_main.o
+presMplValue        0x2               ./src/r_main.o
+cycleStart          0x2               ./src/r_main.o
+a                   0x2               ./src/r_main.o
+g_iica0_slave_status_flag
+                    0x1               ./src/r_cg_serial.o
+test                0x1               ./src/r_main.o
+powerFlag           0x2               ./src/r_main.o
+tempMplValue        0x2               ./src/r_main.o
+uart1RxBuf          0x29              ./src/my_lcd.o
+convTempHum         0x2               ./src/r_main.o
+alarmConditionPressure
+                    0x1               ./src/r_main.o
+last_received       0x2               ./src/r_main.o
+temp                0x1               ./src/r_main.o
+alarmFlag           0xa               ./src/r_main.o
+g_iica0_rx_len      0x2               ./src/r_cg_serial.o
+alarmConditionTemp  0x1               ./src/r_main.o
+valueView           0x2               ./src/r_main.o
+displayArr          0x1e              ./src/my_lcd.o
+g_iica0_rx_cnt      0x2               ./src/r_cg_serial.o
+gp_uart1_rx_address
+                    0x2               ./src/r_cg_serial.o
+gp_iica0_tx_address
+                    0x2               ./src/r_cg_serial.o
+mpl115Coef_c12      0x2               ./src/r_cg_serial_user.o
+alarmConditionHumidity
+                    0x1               ./src/r_main.o
+sec_flag            0x2               ./src/r_cg_rtc_user.o
+mpl115Coef_b2       0x2               ./src/r_cg_serial_user.o
+data_count          0x2               ./src/r_main.o
+alarmCurrent        0x2               ./src/r_main.o
+displayLength       0x2               ./src/my_lcd.o
+IIC_Flag            0x2               ./src/r_main.o
+alarmsArr           0x15e             ./src/r_main.o
+buzzerON            0x2               ./src/r_main.o
+menuState           0x2               ./src/r_main.o
+gp_uart1_tx_address
+                    0x2               ./src/r_cg_serial.o
+pComp               0x2               ./src/r_main.o
+tx_count            0x2               ./src/r_main.o
+uart1RxErrFlag      0x1               ./src/r_main.o
+mpl115Coef_a0       0x2               ./src/r_cg_serial_user.o
+haltState           0x1               ./src/r_main.o
+display             0x1               ./src/my_functions.o
+g_iica0_tx_cnt      0x2               ./src/r_cg_serial.o
+alarmConditionWind  0x1               ./src/r_main.o
+uart1TxFlag         0x2               ./src/r_main.o
+Mode                0x1               ./src/r_main.o
+uart1Status         0x2               ./src/r_main.o
+IIC_Buf             0x160             ./src/r_main.o
+rx_count            0x2               ./src/r_main.o
+rtcStatus           0x2               ./src/r_main.o
+pressValue          0x2               ./src/r_main.o
+g_uart1_tx_count    0x2               ./src/r_cg_serial.o
+uart1TxBuf          0x28              ./src/r_main.o
+buzState            0x2               ./src/r_main.o
+g_iica0_master_status_flag
+                    0x1               ./src/r_cg_serial.o
+transmit            0x2               ./src/r_main.o
+oldstate            0x1               ./src/my_lcd.o
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+VEC              0x00000000         0x00000004
+IVEC             0x00000004         0x000000bc
+OPT              0x000000c0         0x00000004
+SEC_ID           0x000000c4         0x0000000a
+OCDSTAD          0x000000ce         0x0000000a
+OCDROM           0x0000fe00         0x00000200
+ROM              0x000000d8         0x0000fd28
+RAM              0x000fef00         0x00000fff
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+
+.vec            0x00000000        0x4
+ *(.vec)
+ .vec           0x00000000        0x4 ./src/r_cg_vector_table.o
+                0x00000000                HardwareVectors
+
+.vects          0x00000004       0x7c
+ *(.vects)
+ .vects         0x00000004       0x7c ./src/r_cg_vector_table.o
+                0x00000004                Vectors
+
+.lowtext        0x000000d8      0x208
+ *(.plt)
+ .plt           0x000000d8      0x208 ./src/my_buzzer.o
+ *(.lowtext)
+                0x000002e0                . = ALIGN (0x2)
+
+.text           0x000002e0     0x86c0
+ *(.text)
+ .text          0x000002e0      0x2d4 ./src/my_buzzer.o
+                0x000002e0                Buzzer
+                0x00000446                BUZZ_LOOP
+                0x000004ec                BUZZ_DOUBLE
+                0x00000576                BUZZ_SHORT
+ .text          0x000005b4     0x1d8f ./src/my_functions.o
+                0x000005b4                cycle
+                0x00000932                IIC_Receive
+                0x0000153e                buttons
+                0x00001af2                flagCheck
+                0x00001c2e                values_menu
+                0x0000206c                alarms_menu
+                0x00002192                alarm_new
+                0x000022a1                readStatus
+ .text          0x00002343      0xb18 ./src/my_lcd.o
+                0x00002343                startTMR0
+                0x0000237e                delayNoInt
+                0x000023ae                initializelcd
+                0x00002516                LCD_write_Nibble
+                0x0000262c                LCD_write_Byte
+                0x00002731                LCD_shift_display
+                0x000027c3                powerCheck
+                0x00002962                Start
+                0x00002c85                delay
+                0x00002ccb                clearBuff
+                0x00002cfe                writeNumber
+                0x00002ddc                writeNumber2
+ .text          0x00002e5b       0xc3 ./src/r_cg_cgc.o
+                0x00002e5b                R_CGC_Create
+ .text          0x00002f1e       0x14 ./src/r_cg_cgc_user.o
+                0x00002f1e                R_CGC_Get_ResetSource
+ .text          0x00002f32      0x3e5 ./src/r_cg_intc.o
+                0x00002f32                R_INTC_Create
+                0x0000324b                R_INTC4_Start
+                0x0000327e                R_INTC4_Stop
+                0x000032b1                R_INTC7_Start
+                0x000032e4                R_INTC7_Stop
+ .text          0x00003317        0x2 ./src/r_cg_intc_user.o
+                0x00003317                r_intc4_interrupt
+                0x00003318                r_intc7_interrupt
+ .text          0x00003319       0x9a ./src/r_cg_pclbuz.o
+                0x00003319                R_PCLBUZ0_Create
+                0x0000337f                R_PCLBUZ0_Start
+                0x00003399                R_PCLBUZ0_Stop
+ .text          0x000033b3        0x0 ./src/r_cg_pclbuz_user.o
+ .text          0x000033b3        0xf ./src/r_cg_port.o
+                0x000033b3                R_PORT_Create
+ .text          0x000033c2        0x0 ./src/r_cg_port_user.o
+ .text          0x000033c2      0x558 ./src/r_cg_rtc.o
+                0x000033c2                R_RTC_Create
+                0x00003468                R_RTC_Start
+                0x000034b4                R_RTC_Stop
+                0x00003500                R_RTC_Get_CounterValue
+                0x00003692                R_RTC_Set_CounterValue
+                0x000037ff                R_RTC_Set_ConstPeriodInterruptOn
+                0x000038c2                R_RTC_Set_ConstPeriodInterruptOff
+ .text          0x0000391a       0xc3 ./src/r_cg_rtc_user.o
+                0x0000391a                r_rtc_interrupt
+                0x0000397c                Dec_to_BCD
+                0x000039b0                BCD_to_Dec
+ .text          0x000039dd      0xaf9 ./src/r_cg_serial.o
+                0x000039dd                R_SAU0_Create
+                0x00003a0f                R_UART1_Create
+                0x00003ce2                R_UART1_Start
+                0x00003dc5                R_UART1_Stop
+                0x00003e7e                R_UART1_Receive
+                0x00003eb4                R_UART1_Send
+                0x00003f50                R_IICA0_Create
+                0x00004171                R_IICA0_Stop
+                0x0000418b                R_IICA0_StopCondition
+                0x000041a5                R_IICA0_Master_Send
+                0x000042e3                R_IICA0_Master_Receive
+                0x00004425                R_IICA0_Busy_Check
+ .text          0x000044d6      0x933 ./src/r_cg_serial_user.o
+                0x000044d6                r_uart1_interrupt_receive
+                0x000045b5                r_uart1_interrupt_send
+                0x00004631                r_iica0_interrupt
+                0x00004964                convertTemp
+                0x00004a6d                convertHumid
+                0x00004ac2                calcPComp
+                0x00004cb5                calCoef
+                0x00004d75                calWind
+ .text          0x00004e09      0xe4e ./src/r_cg_timer.o
+                0x00004e09                R_TAU0_Create
+                0x0000575d                R_TAU0_Channel0_Start
+                0x000057b8                R_TAU0_Channel0_Stop
+                0x00005813                R_TAU0_Channel1_Start
+                0x0000586e                R_TAU0_Channel1_Stop
+                0x000058c9                R_TAU0_Channel2_Start
+                0x00005924                R_TAU0_Channel2_Stop
+                0x0000597f                R_TAU0_Channel3_Start
+                0x000059da                R_TAU0_Channel3_Stop
+                0x00005a35                R_TAU0_Channel4_Start
+                0x00005a90                R_TAU0_Channel4_Stop
+                0x00005aeb                R_TAU0_Channel5_Start
+                0x00005b46                R_TAU0_Channel5_Stop
+                0x00005ba1                R_TAU0_Channel7_Start
+                0x00005bfc                R_TAU0_Channel7_Stop
+ .text          0x00005c57      0x148 ./src/r_cg_timer_user.o
+                0x00005c57                r_tau0_channel0_interrupt
+                0x00005c63                r_tau0_channel1_interrupt
+                0x00005c89                r_tau0_channel2_interrupt
+                0x00005caf                r_tau0_channel3_interrupt
+                0x00005d0f                r_tau0_channel4_interrupt
+                0x00005d31                r_tau0_channel5_interrupt
+                0x00005d7d                r_tau0_channel7_interrupt
+ .text          0x00005d9f        0xc ./src/r_cg_vector_table.o
+                0x00005d9f                R_Dummy
+ .text          0x00005dab       0x4e ./src/r_hardware_setup.o
+                0x00005dab                R_Systeminit
+                0x00005de8                HardwareSetup
+ .text          0x00005df9      0xbd0 ./src/r_main.o
+                0x00005df9                main
+                0x000069c5                R_MAIN_UserInit
+ .text          0x000069c9       0x60 ./src/r_reset_program.o
+                0x000069cb                PowerON_Reset
+ .text          0x00006a29        0x0 libED314_Projek1.a(memcpy.o)
+ .text          0x00006a29       0xb8 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_fixunssfsi.o)
+                0x00006a29                __fixunssfsi
+ .text          0x00006ae1      0x6eb C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_addsub_sf.o)
+                0x00007076                __addsf3
+                0x0000711b                __subsf3
+ .text          0x000071cc      0x408 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_mul_sf.o)
+                0x000071cc                __mulsf3
+ .text          0x000075d4      0x279 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_div_sf.o)
+                0x000075d4                __divsf3
+ .text          0x0000784d       0xa7 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_ge_sf.o)
+                0x0000784d                __gesf2
+ .text          0x000078f4      0x139 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_si_to_sf.o)
+                0x000078f4                __floatsisf
+ .text          0x00007a2d      0x10d C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_sf_to_si.o)
+                0x00007a2d                __fixsfsi
+ .text          0x00007b3a        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_thenan_sf.o)
+ .text          0x00007b3a       0xd4 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(mulsi3.o)
+                0x00007b3b                __mulsi3
+                0x00007be2                __mulhi3
+ .text          0x00007c0e      0x165 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(divmodqi.o)
+                0x00007cbe                __udivqi3
+                0x00007cc4                __umodqi3
+                0x00007cca                __divqi3
+                0x00007d22                __modqi3
+ .text          0x00007d73      0x2d0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_muldi3.o)
+                0x00007d73                __muldi3
+ .text          0x00008043      0x1e7 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_lshrdi3.o)
+                0x00008043                __lshrdi3
+ .text          0x0000822a       0xdd C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_clzsi2.o)
+                0x0000822a                __clzsi2
+ .text          0x00008307      0x389 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_pack_sf.o)
+                0x00008307                __pack_f
+ .text          0x00008690      0x183 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_unpack_sf.o)
+                0x00008690                __unpack_f
+ .text          0x00008813      0x152 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_fpcmp_parts_sf.o)
+                0x00008813                __fpcmp_parts_f
+ .text          0x00008965        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_clz.o)
+ *(.text.*)
+ .text.memcpy   0x00008965       0x3a libED314_Projek1.a(memcpy.o)
+                0x00008965                memcpy
+                0x0000899f                etext = .
+                0x000089a0                . = ALIGN (0x2)
+ *fill*         0x0000899f        0x1 
+
+.init
+ *(.init)
+
+.fini
+ *(.fini)
+
+.got
+ *(.got)
+ *(.got.plt)
+
+.rodata         0x000089a0      0x162
+                0x000089a0                . = ALIGN (0x2)
+ *(.rodata)
+ .rodata        0x000089a0       0x57 ./src/my_functions.o
+ *fill*         0x000089f7        0x1 
+ .rodata        0x000089f8        0xa C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_thenan_sf.o)
+                0x000089f8                __thenan_sf
+ .rodata        0x00008a02      0x100 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_clz.o)
+                0x00008a02                __clz_tab
+ *(.rodata.*)
+                0x00008b02                _erodata = .
+
+.eh_frame_hdr
+ *(.eh_frame_hdr)
+
+.eh_frame
+ *(.eh_frame)
+
+.jcr
+ *(.jcr)
+
+.tors           0x00008b02        0x0
+                0x00008b02                __CTOR_LIST__ = .
+                0x00008b02                . = ALIGN (0x2)
+                0x00008b02                ___ctors = .
+ *(.ctors)
+                0x00008b02                ___ctors_end = .
+                0x00008b02                __CTOR_END__ = .
+                0x00008b02                __DTOR_LIST__ = .
+                0x00008b02                ___dtors = .
+ *(.dtors)
+                0x00008b02                ___dtors_end = .
+                0x00008b02                __DTOR_END__ = .
+                0x00008b02                . = ALIGN (0x2)
+                0x00008b02                _mdata = .
+
+.data           0x000fef00       0xde load address 0x00008b02
+                0x000fef00                . = ALIGN (0x2)
+                0x000fef00                _data = .
+ *(.data)
+ .data          0x000fef00        0x6 ./src/my_buzzer.o
+                0x000fef00                buzFlag
+                0x000fef02                buzCount
+                0x000fef04                five_milsec_counter
+ .data          0x000fef06       0x64 ./src/my_functions.o
+                0x000fef06                cycleTimer
+                0x000fef08                cycleMode
+                0x000fef0a                centreBuf
+                0x000fef0e                centreFlag
+                0x000fef10                centreSet
+                0x000fef12                upBuf
+                0x000fef16                upFlag
+                0x000fef18                upSet
+                0x000fef1a                downBuf
+                0x000fef1e                downFlag
+                0x000fef20                downSet
+                0x000fef22                leftBuf
+                0x000fef26                leftFlag
+                0x000fef28                leftSet
+                0x000fef2a                rightBuf
+                0x000fef2e                rightFlag
+                0x000fef30                rightSet
+                0x000fef32                Temperature
+                0x000fef33                Humidity
+                0x000fef34                Pressure
+                0x000fef35                WindSpeed
+                0x000fef36                tempArr1
+                0x000fef42                humArr1
+                0x000fef4b                presArr1
+                0x000fef54                windArr1
+                0x000fef5f                DTArr1
+ .data          0x000fef6a        0x0 ./src/my_lcd.o
+ .data          0x000fef6a        0x0 ./src/r_cg_cgc.o
+ .data          0x000fef6a        0x0 ./src/r_cg_cgc_user.o
+ .data          0x000fef6a        0x0 ./src/r_cg_intc.o
+ .data          0x000fef6a        0x0 ./src/r_cg_intc_user.o
+ .data          0x000fef6a        0x0 ./src/r_cg_pclbuz.o
+ .data          0x000fef6a        0x0 ./src/r_cg_pclbuz_user.o
+ .data          0x000fef6a        0x0 ./src/r_cg_port.o
+ .data          0x000fef6a        0x0 ./src/r_cg_port_user.o
+ .data          0x000fef6a        0x0 ./src/r_cg_rtc.o
+ .data          0x000fef6a        0x0 ./src/r_cg_rtc_user.o
+ .data          0x000fef6a        0x0 ./src/r_cg_serial.o
+ .data          0x000fef6a        0x4 ./src/r_cg_serial_user.o
+                0x000fef6a                WindSpeed_16
+                0x000fef6c                WindOldTurns
+ .data          0x000fef6e        0x0 ./src/r_cg_timer.o
+ .data          0x000fef6e       0x14 ./src/r_cg_timer_user.o
+                0x000fef6e                powerCount
+                0x000fef70                wind_count1
+                0x000fef72                wind_count2
+                0x000fef74                buzTime
+                0x000fef76                buzTimeFlag
+                0x000fef78                twoFlag
+                0x000fef7a                oneFlag
+                0x000fef7c                tenMilFlag
+                0x000fef7e                valuesTimer
+                0x000fef80                fiveMilFlag
+ .data          0x000fef82        0x0 ./src/r_cg_vector_table.o
+ .data          0x000fef82        0x0 ./src/r_hardware_setup.o
+ .data          0x000fef82       0x5c ./src/r_main.o
+                0x000fef82                Welcome
+                0x000fef93                tempArr
+                0x000fef9f                humArr
+                0x000fefa8                PresArr
+                0x000fefb1                WindArr
+                0x000fefbc                clockSet
+                0x000fefc6                clockGet
+                0x000fefd0                my_time
+                0x000fefd8                welcomeFlag
+                0x000fefda                timer
+                0x000fefdc                buzzalarm
+ .data          0x000fefde        0x0 ./src/r_reset_program.o
+ .data          0x000fefde        0x0 libED314_Projek1.a(memcpy.o)
+ .data          0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_fixunssfsi.o)
+ .data          0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_addsub_sf.o)
+ .data          0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_mul_sf.o)
+ .data          0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_div_sf.o)
+ .data          0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_ge_sf.o)
+ .data          0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_si_to_sf.o)
+ .data          0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_sf_to_si.o)
+ .data          0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_thenan_sf.o)
+ .data          0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(mulsi3.o)
+ .data          0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(divmodqi.o)
+ .data          0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_muldi3.o)
+ .data          0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_lshrdi3.o)
+ .data          0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_clzsi2.o)
+ .data          0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_pack_sf.o)
+ .data          0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_unpack_sf.o)
+ .data          0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_fpcmp_parts_sf.o)
+ .data          0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_clz.o)
+ *(.data.*)
+                0x000fefde                . = ALIGN (0x2)
+                0x000fefde                _edata = .
+
+.bss            0x000fefde      0x3d0 load address 0x00008be0
+                0x000fefde                . = ALIGN (0x2)
+                0x000fefde                _bss = .
+ *(.bss)
+ .bss           0x000fefde        0x0 ./src/my_buzzer.o
+ .bss           0x000fefde        0x0 ./src/my_functions.o
+ .bss           0x000fefde        0x0 ./src/my_lcd.o
+ .bss           0x000fefde        0x0 ./src/r_cg_cgc.o
+ .bss           0x000fefde        0x0 ./src/r_cg_cgc_user.o
+ .bss           0x000fefde        0x0 ./src/r_cg_intc.o
+ .bss           0x000fefde        0x0 ./src/r_cg_intc_user.o
+ .bss           0x000fefde        0x0 ./src/r_cg_pclbuz.o
+ .bss           0x000fefde        0x0 ./src/r_cg_pclbuz_user.o
+ .bss           0x000fefde        0x0 ./src/r_cg_port.o
+ .bss           0x000fefde        0x0 ./src/r_cg_port_user.o
+ .bss           0x000fefde        0x0 ./src/r_cg_rtc.o
+ .bss           0x000fefde        0x0 ./src/r_cg_rtc_user.o
+ .bss           0x000fefde        0x0 ./src/r_cg_serial.o
+ .bss           0x000fefde        0x0 ./src/r_cg_serial_user.o
+ .bss           0x000fefde        0x0 ./src/r_cg_timer.o
+ .bss           0x000fefde        0x0 ./src/r_cg_timer_user.o
+ .bss           0x000fefde        0x0 ./src/r_cg_vector_table.o
+ .bss           0x000fefde        0x0 ./src/r_hardware_setup.o
+ .bss           0x000fefde        0x0 ./src/r_main.o
+ .bss           0x000fefde        0x0 ./src/r_reset_program.o
+ .bss           0x000fefde        0x0 libED314_Projek1.a(memcpy.o)
+ .bss           0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_fixunssfsi.o)
+ .bss           0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_addsub_sf.o)
+ .bss           0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_mul_sf.o)
+ .bss           0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_div_sf.o)
+ .bss           0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_ge_sf.o)
+ .bss           0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_si_to_sf.o)
+ .bss           0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_sf_to_si.o)
+ .bss           0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_thenan_sf.o)
+ .bss           0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(mulsi3.o)
+ .bss           0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(divmodqi.o)
+ .bss           0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_muldi3.o)
+ .bss           0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_lshrdi3.o)
+ .bss           0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_clzsi2.o)
+ .bss           0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_pack_sf.o)
+ .bss           0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_unpack_sf.o)
+ .bss           0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_fpcmp_parts_sf.o)
+ .bss           0x000fefde        0x0 C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_clz.o)
+ *(.bss.**)
+                0x000fefde                . = ALIGN (0x2)
+ *(COMMON)
+ COMMON         0x000fefde        0x2 ./src/my_functions.o
+                0x000fefde                wind_8bit
+                0x000fefdf                display
+ COMMON         0x000fefe0       0x4b ./src/my_lcd.o
+                0x000fefe0                uart1RxBuf
+                0x000ff009                displayArr
+                0x000ff028                displayLength
+                0x000ff02a                oldstate
+ *fill*         0x000ff02b        0x1 
+ COMMON         0x000ff02c        0x2 ./src/r_cg_rtc_user.o
+                0x000ff02c                sec_flag
+ COMMON         0x000ff02e       0x17 ./src/r_cg_serial.o
+                0x000ff02e                g_uart1_rx_length
+                0x000ff030                gp_iica0_rx_address
+                0x000ff032                g_uart1_rx_count
+                0x000ff034                g_iica0_slave_status_flag
+                0x000ff036                g_iica0_rx_len
+                0x000ff038                g_iica0_rx_cnt
+                0x000ff03a                gp_uart1_rx_address
+                0x000ff03c                gp_iica0_tx_address
+                0x000ff03e                gp_uart1_tx_address
+                0x000ff040                g_iica0_tx_cnt
+                0x000ff042                g_uart1_tx_count
+                0x000ff044                g_iica0_master_status_flag
+ *fill*         0x000ff045        0x1 
+ COMMON         0x000ff046        0x8 ./src/r_cg_serial_user.o
+                0x000ff046                mpl115Coef_b1
+                0x000ff048                mpl115Coef_c12
+                0x000ff04a                mpl115Coef_b2
+                0x000ff04c                mpl115Coef_a0
+ COMMON         0x000ff04e      0x360 ./src/r_main.o
+                0x000ff04e                statusByte
+                0x000ff04f                dataBuf
+                0x000ff078                valueDisplay
+                0x000ff07a                alarmConditionLowTemp
+                0x000ff07c                my_time_point
+                0x000ff07e                alarmCount
+                0x000ff080                uart1RxFlag
+                0x000ff082                presMplValue
+                0x000ff084                cycleStart
+                0x000ff086                a
+                0x000ff088                test
+                0x000ff08a                powerFlag
+                0x000ff08c                tempMplValue
+                0x000ff08e                convTempHum
+                0x000ff090                alarmConditionPressure
+                0x000ff092                last_received
+                0x000ff094                temp
+                0x000ff096                alarmFlag
+                0x000ff0a0                alarmConditionTemp
+                0x000ff0a2                valueView
+                0x000ff0a4                alarmConditionHumidity
+                0x000ff0a6                data_count
+                0x000ff0a8                alarmCurrent
+                0x000ff0aa                IIC_Flag
+                0x000ff0ac                alarmsArr
+                0x000ff20a                buzzerON
+                0x000ff20c                menuState
+                0x000ff20e                pComp
+                0x000ff210                tx_count
+                0x000ff212                uart1RxErrFlag
+                0x000ff213                haltState
+                0x000ff214                alarmConditionWind
+                0x000ff216                uart1TxFlag
+                0x000ff218                Mode
+                0x000ff21a                uart1Status
+                0x000ff21c                IIC_Buf
+                0x000ff37c                rx_count
+                0x000ff37e                rtcStatus
+                0x000ff380                pressValue
+                0x000ff382                uart1TxBuf
+                0x000ff3aa                buzState
+                0x000ff3ac                transmit
+                0x000ff3ae                . = ALIGN (0x2)
+                0x000ff3ae                _ebss = .
+                0x000ff3ae                _end = .
+
+.stack          0x000ffe00        0x0
+                0x000ffe00                _stack = .
+
+.option_bytes   0x000000c0        0x4
+ *(.option_bytes)
+ .option_bytes  0x000000c0        0x4 ./src/r_cg_vector_table.o
+                0x000000c0                Option_Bytes
+
+.security_id    0x000000c4        0xa
+ *(.security_id)
+ .security_id   0x000000c4        0xa ./src/r_cg_vector_table.o
+                0x000000c4                Security_Id
+LOAD ./src/my_buzzer.o
+LOAD ./src/my_functions.o
+LOAD ./src/my_lcd.o
+LOAD ./src/r_cg_cgc.o
+LOAD ./src/r_cg_cgc_user.o
+LOAD ./src/r_cg_intc.o
+LOAD ./src/r_cg_intc_user.o
+LOAD ./src/r_cg_pclbuz.o
+LOAD ./src/r_cg_pclbuz_user.o
+LOAD ./src/r_cg_port.o
+LOAD ./src/r_cg_port_user.o
+LOAD ./src/r_cg_rtc.o
+LOAD ./src/r_cg_rtc_user.o
+LOAD ./src/r_cg_serial.o
+LOAD ./src/r_cg_serial_user.o
+LOAD ./src/r_cg_timer.o
+LOAD ./src/r_cg_timer_user.o
+LOAD ./src/r_cg_vector_table.o
+LOAD ./src/r_hardware_setup.o
+LOAD ./src/r_main.o
+LOAD ./src/r_reset_program.o
+LOAD libED314_Projek1.a
+START GROUP
+LOAD F:\E-Design\New folder (2)\ED314_Projek1\HardwareDebug\libED314_Projek1.a
+LOAD C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a
+END GROUP
+OUTPUT(ED314_Projek1.x elf32-rl78)
+
+.debug_frame    0x00000000      0xb90
+ .debug_frame   0x00000000       0x64 ./src/my_buzzer.o
+ .debug_frame   0x00000064       0xcc ./src/my_functions.o
+ .debug_frame   0x00000130      0x150 ./src/my_lcd.o
+ .debug_frame   0x00000280       0x2c ./src/r_cg_cgc.o
+ .debug_frame   0x000002ac       0x2c ./src/r_cg_cgc_user.o
+ .debug_frame   0x000002d8       0x64 ./src/r_cg_intc.o
+ .debug_frame   0x0000033c       0x34 ./src/r_cg_intc_user.o
+ .debug_frame   0x00000370       0x44 ./src/r_cg_pclbuz.o
+ .debug_frame   0x000003b4       0x24 ./src/r_cg_port.o
+ .debug_frame   0x000003d8       0x9c ./src/r_cg_rtc.o
+ .debug_frame   0x00000474       0xa4 ./src/r_cg_rtc_user.o
+ .debug_frame   0x00000518      0x10c ./src/r_cg_serial.o
+ .debug_frame   0x00000624      0x20c ./src/r_cg_serial_user.o
+ .debug_frame   0x00000830      0x120 ./src/r_cg_timer.o
+ .debug_frame   0x00000950      0x188 ./src/r_cg_timer_user.o
+ .debug_frame   0x00000ad8       0x40 ./src/r_cg_vector_table.o
+ .debug_frame   0x00000b18       0x3c ./src/r_hardware_setup.o
+ .debug_frame   0x00000b54       0x3c ./src/r_main.o
+
+.debug_info     0x00000000     0x3dab
+ .debug_info    0x00000000      0x2d8 ./src/my_buzzer.o
+ .debug_info    0x000002d8      0x839 ./src/my_functions.o
+ .debug_info    0x00000b11      0x592 ./src/my_lcd.o
+ .debug_info    0x000010a3      0x164 ./src/r_cg_cgc.o
+ .debug_info    0x00001207       0x89 ./src/r_cg_cgc_user.o
+ .debug_info    0x00001290      0x448 ./src/r_cg_intc.o
+ .debug_info    0x000016d8       0x80 ./src/r_cg_intc_user.o
+ .debug_info    0x00001758      0x186 ./src/r_cg_pclbuz.o
+ .debug_info    0x000018de       0x56 ./src/r_cg_pclbuz_user.o
+ .debug_info    0x00001934      0x11e ./src/r_cg_port.o
+ .debug_info    0x00001a52       0x56 ./src/r_cg_port_user.o
+ .debug_info    0x00001aa8      0x3b9 ./src/r_cg_rtc.o
+ .debug_info    0x00001e61      0x1f6 ./src/r_cg_rtc_user.o
+ .debug_info    0x00002057      0x704 ./src/r_cg_serial.o
+ .debug_info    0x0000275b      0x542 ./src/r_cg_serial_user.o
+ .debug_info    0x00002c9d      0x57a ./src/r_cg_timer.o
+ .debug_info    0x00003217      0x1a7 ./src/r_cg_timer_user.o
+ .debug_info    0x000033be      0x10f ./src/r_cg_vector_table.o
+ .debug_info    0x000034cd       0x8b ./src/r_hardware_setup.o
+ .debug_info    0x00003558      0x7cb ./src/r_main.o
+ .debug_info    0x00003d23       0x88 ./src/r_reset_program.o
+
+.debug_abbrev   0x00000000     0x11f1
+ .debug_abbrev  0x00000000      0x108 ./src/my_buzzer.o
+ .debug_abbrev  0x00000108      0x1b9 ./src/my_functions.o
+ .debug_abbrev  0x000002c1      0x1f8 ./src/my_lcd.o
+ .debug_abbrev  0x000004b9       0x9a ./src/r_cg_cgc.o
+ .debug_abbrev  0x00000553       0x53 ./src/r_cg_cgc_user.o
+ .debug_abbrev  0x000005a6       0xcd ./src/r_cg_intc.o
+ .debug_abbrev  0x00000673       0x37 ./src/r_cg_intc_user.o
+ .debug_abbrev  0x000006aa       0x8f ./src/r_cg_pclbuz.o
+ .debug_abbrev  0x00000739       0x1b ./src/r_cg_pclbuz_user.o
+ .debug_abbrev  0x00000754       0x82 ./src/r_cg_port.o
+ .debug_abbrev  0x000007d6       0x1b ./src/r_cg_port_user.o
+ .debug_abbrev  0x000007f1      0x136 ./src/r_cg_rtc.o
+ .debug_abbrev  0x00000927      0x135 ./src/r_cg_rtc_user.o
+ .debug_abbrev  0x00000a5c      0x1a8 ./src/r_cg_serial.o
+ .debug_abbrev  0x00000c04      0x227 ./src/r_cg_serial_user.o
+ .debug_abbrev  0x00000e2b       0xe5 ./src/r_cg_timer.o
+ .debug_abbrev  0x00000f10       0x64 ./src/r_cg_timer_user.o
+ .debug_abbrev  0x00000f74       0x7c ./src/r_cg_vector_table.o
+ .debug_abbrev  0x00000ff0       0x5c ./src/r_hardware_setup.o
+ .debug_abbrev  0x0000104c      0x191 ./src/r_main.o
+ .debug_abbrev  0x000011dd       0x14 ./src/r_reset_program.o
+
+.debug_aranges  0x00000000      0x290
+ .debug_aranges
+                0x00000000       0x20 ./src/my_buzzer.o
+ .debug_aranges
+                0x00000020       0x20 ./src/my_functions.o
+ .debug_aranges
+                0x00000040       0x20 ./src/my_lcd.o
+ .debug_aranges
+                0x00000060       0x20 ./src/r_cg_cgc.o
+ .debug_aranges
+                0x00000080       0x20 ./src/r_cg_cgc_user.o
+ .debug_aranges
+                0x000000a0       0x20 ./src/r_cg_intc.o
+ .debug_aranges
+                0x000000c0       0x20 ./src/r_cg_intc_user.o
+ .debug_aranges
+                0x000000e0       0x20 ./src/r_cg_pclbuz.o
+ .debug_aranges
+                0x00000100       0x18 ./src/r_cg_pclbuz_user.o
+ .debug_aranges
+                0x00000118       0x20 ./src/r_cg_port.o
+ .debug_aranges
+                0x00000138       0x18 ./src/r_cg_port_user.o
+ .debug_aranges
+                0x00000150       0x20 ./src/r_cg_rtc.o
+ .debug_aranges
+                0x00000170       0x20 ./src/r_cg_rtc_user.o
+ .debug_aranges
+                0x00000190       0x20 ./src/r_cg_serial.o
+ .debug_aranges
+                0x000001b0       0x20 ./src/r_cg_serial_user.o
+ .debug_aranges
+                0x000001d0       0x20 ./src/r_cg_timer.o
+ .debug_aranges
+                0x000001f0       0x20 ./src/r_cg_timer_user.o
+ .debug_aranges
+                0x00000210       0x20 ./src/r_cg_vector_table.o
+ .debug_aranges
+                0x00000230       0x20 ./src/r_hardware_setup.o
+ .debug_aranges
+                0x00000250       0x20 ./src/r_main.o
+ .debug_aranges
+                0x00000270       0x20 ./src/r_reset_program.o
+
+.debug_line     0x00000000     0x157c
+ .debug_line    0x00000000       0xfc ./src/my_buzzer.o
+ .debug_line    0x000000fc      0x4c7 ./src/my_functions.o
+ .debug_line    0x000005c3      0x222 ./src/my_lcd.o
+ .debug_line    0x000007e5       0x84 ./src/r_cg_cgc.o
+ .debug_line    0x00000869       0x5e ./src/r_cg_cgc_user.o
+ .debug_line    0x000008c7       0xaf ./src/r_cg_intc.o
+ .debug_line    0x00000976       0x4c ./src/r_cg_intc_user.o
+ .debug_line    0x000009c2       0x66 ./src/r_cg_pclbuz.o
+ .debug_line    0x00000a28       0x1d ./src/r_cg_pclbuz_user.o
+ .debug_line    0x00000a45       0x64 ./src/r_cg_port.o
+ .debug_line    0x00000aa9       0x1d ./src/r_cg_port_user.o
+ .debug_line    0x00000ac6      0x157 ./src/r_cg_rtc.o
+ .debug_line    0x00000c1d       0x86 ./src/r_cg_rtc_user.o
+ .debug_line    0x00000ca3      0x1af ./src/r_cg_serial.o
+ .debug_line    0x00000e52      0x16f ./src/r_cg_serial_user.o
+ .debug_line    0x00000fc1      0x1c0 ./src/r_cg_timer.o
+ .debug_line    0x00001181       0x95 ./src/r_cg_timer_user.o
+ .debug_line    0x00001216       0x62 ./src/r_cg_vector_table.o
+ .debug_line    0x00001278       0x5b ./src/r_hardware_setup.o
+ .debug_line    0x000012d3      0x230 ./src/r_main.o
+ .debug_line    0x00001503       0x79 ./src/r_reset_program.o
+
+.debug_str      0x00000000     0x11f1
+ .debug_str     0x00000000      0x214 ./src/my_buzzer.o
+                                0x22a (size before relaxing)
+ .debug_str     0x00000214      0x381 ./src/my_functions.o
+                                0x541 (size before relaxing)
+ .debug_str     0x00000595       0xe0 ./src/my_lcd.o
+                                0x25b (size before relaxing)
+ .debug_str     0x00000675       0x35 ./src/r_cg_cgc.o
+                                0x16a (size before relaxing)
+ .debug_str     0x000006aa       0x38 ./src/r_cg_cgc_user.o
+                                0x164 (size before relaxing)
+ .debug_str     0x000006e2       0xc2 ./src/r_cg_intc.o
+                                0x242 (size before relaxing)
+ .debug_str     0x000007a4       0x3c ./src/r_cg_intc_user.o
+                                0x160 (size before relaxing)
+ .debug_str     0x000007e0       0x45 ./src/r_cg_pclbuz.o
+                                0x192 (size before relaxing)
+ .debug_str     0x00000825       0x1a ./src/r_cg_pclbuz_user.o
+                                0x13e (size before relaxing)
+ .debug_str     0x0000083f       0x28 ./src/r_cg_port.o
+                                0x154 (size before relaxing)
+ .debug_str     0x00000867       0x18 ./src/r_cg_port_user.o
+                                0x13c (size before relaxing)
+ .debug_str     0x0000087f      0x155 ./src/r_cg_rtc.o
+                                0x2f2 (size before relaxing)
+ .debug_str     0x000009d4       0x5e ./src/r_cg_rtc_user.o
+                                0x1b5 (size before relaxing)
+ .debug_str     0x00000a32      0x24d ./src/r_cg_serial.o
+                                0x409 (size before relaxing)
+ .debug_str     0x00000c7f      0x22e ./src/r_cg_serial_user.o
+                                0x4b1 (size before relaxing)
+ .debug_str     0x00000ead      0x119 ./src/r_cg_timer.o
+                                0x36f (size before relaxing)
+ .debug_str     0x00000fc6       0xcf ./src/r_cg_timer_user.o
+                                0x27d (size before relaxing)
+ .debug_str     0x00001095       0x4c ./src/r_cg_vector_table.o
+                                0x180 (size before relaxing)
+ .debug_str     0x000010e1       0x35 ./src/r_hardware_setup.o
+                                0x159 (size before relaxing)
+ .debug_str     0x00001116       0xdb ./src/r_main.o
+                                0x4ca (size before relaxing)
+
+.comment        0x00000000      0x118
+ .comment       0x00000000       0x8b ./src/my_buzzer.o
+                                 0x8c (size before relaxing)
+ .comment       0x00000000       0x8c ./src/my_functions.o
+ .comment       0x00000000       0x8c ./src/my_lcd.o
+ .comment       0x00000000       0x8c ./src/r_cg_cgc.o
+ .comment       0x00000000       0x8c ./src/r_cg_cgc_user.o
+ .comment       0x00000000       0x8c ./src/r_cg_intc.o
+ .comment       0x00000000       0x8c ./src/r_cg_intc_user.o
+ .comment       0x00000000       0x8c ./src/r_cg_pclbuz.o
+ .comment       0x00000000       0x8c ./src/r_cg_pclbuz_user.o
+ .comment       0x00000000       0x8c ./src/r_cg_port.o
+ .comment       0x00000000       0x8c ./src/r_cg_port_user.o
+ .comment       0x00000000       0x8c ./src/r_cg_rtc.o
+ .comment       0x00000000       0x8c ./src/r_cg_rtc_user.o
+ .comment       0x00000000       0x8c ./src/r_cg_serial.o
+ .comment       0x00000000       0x8c ./src/r_cg_serial_user.o
+ .comment       0x00000000       0x8c ./src/r_cg_timer.o
+ .comment       0x00000000       0x8c ./src/r_cg_timer_user.o
+ .comment       0x00000000       0x8c ./src/r_cg_vector_table.o
+ .comment       0x00000000       0x8c ./src/r_hardware_setup.o
+ .comment       0x00000000       0x8c ./src/r_main.o
+ .comment       0x0000008b       0x8d libED314_Projek1.a(memcpy.o)
+                                 0x8e (size before relaxing)
+ .comment       0x00000000       0x8c C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_fixunssfsi.o)
+ .comment       0x00000000       0x8c C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_addsub_sf.o)
+ .comment       0x00000000       0x8c C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_mul_sf.o)
+ .comment       0x00000000       0x8c C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_div_sf.o)
+ .comment       0x00000000       0x8c C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_ge_sf.o)
+ .comment       0x00000000       0x8c C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_si_to_sf.o)
+ .comment       0x00000000       0x8c C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_sf_to_si.o)
+ .comment       0x00000000       0x8c C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_thenan_sf.o)
+ .comment       0x00000000       0x8c C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_muldi3.o)
+ .comment       0x00000000       0x8c C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_lshrdi3.o)
+ .comment       0x00000000       0x8c C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_clzsi2.o)
+ .comment       0x00000000       0x8c C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_pack_sf.o)
+ .comment       0x00000000       0x8c C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_unpack_sf.o)
+ .comment       0x00000000       0x8c C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_fpcmp_parts_sf.o)
+ .comment       0x00000000       0x8c C:\PROGRA~2\KPIT\GNURL7~1.01-\rl78-ELF/lib/gcc/rl78-elf/4.8-GNURL78_v14.01\libgcc.a(_clz.o)
+
+.debug_ranges   0x00000000       0x18
+ .debug_ranges  0x00000000       0x18 ./src/r_main.o
